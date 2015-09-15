@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
@@ -19,16 +21,20 @@ import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 
 import java.util.ArrayList;
 
+
+
 /**
      * A placeholder fragment containing a simple view.
      */
 public class PlaceholderFragment extends Fragment
-        implements View.OnClickListener, OnRestoreRecyclerViewInterface {
+        implements View.OnClickListener, OnRestoreRecyclerViewInterface, CompoundButton.OnCheckedChangeListener {
     private View mRootView;
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
     @Bind(R.id.behaviorSwitchCompatId)
     SwitchCompat mBehaviorSwitch;
+    @Bind(R.id.titleBehaviorId)
+    TextView titleBehaviorTextview;
     private String TAG = "PlaceholderFragment";
     private CardViewBehavior mCardBehavior;
     private View mV;
@@ -59,6 +65,7 @@ public class PlaceholderFragment extends Fragment
         mRecyclerView.setAdapter(adapter);
 
         mCardBehavior = CardViewBehavior.getInstance(0, mRecyclerView, getActivity());
+        mBehaviorSwitch.setOnCheckedChangeListener(this);
     }
 
     /**
@@ -91,5 +98,12 @@ public class PlaceholderFragment extends Fragment
         ArrayList<ShoppingItem> shoppingItems = getData();
         ((RecyclerviewAdapter) mRecyclerView.getAdapter()).addAllItem(shoppingItems);
         mCardBehavior.collapse();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean toggling) {
+        mCardBehavior.collapse();
+        titleBehaviorTextview.setText(toggling ? "SelectAndDisappear" : "AppearOver");
+        mCardBehavior.setBehavior(toggling ? 0 : 1);
     }
 }
