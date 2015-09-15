@@ -2,8 +2,10 @@ package com.application.sample.selectcardviewprototype.app.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +22,16 @@ import java.util.ArrayList;
 /**
      * A placeholder fragment containing a simple view.
      */
-public class PlaceholderFragment extends Fragment implements View.OnClickListener {
+public class PlaceholderFragment extends Fragment
+        implements View.OnClickListener, OnRestoreRecyclerViewInterface {
     private View mRootView;
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
+    @Bind(R.id.behaviorSwitchCompatId)
+    SwitchCompat mBehaviorSwitch;
     private String TAG = "PlaceholderFragment";
+    private CardViewBehavior mCardBehavior;
+    private View mV;
 
     public PlaceholderFragment() {
     }
@@ -43,10 +50,15 @@ public class PlaceholderFragment extends Fragment implements View.OnClickListene
      */
     public void onInitView() {
         ArrayList<ShoppingItem> shoppingItems = getData();
+
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(getActivity(), shoppingItems, this);
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity());
+        DefaultItemAnimator animator = new DefaultItemAnimator();
         mRecyclerView.setLayoutManager(lm);
+        mRecyclerView.setItemAnimator(animator);
         mRecyclerView.setAdapter(adapter);
+
+        mCardBehavior = CardViewBehavior.getInstance(0, mRecyclerView, getActivity());
     }
 
     /**
@@ -66,14 +78,18 @@ public class PlaceholderFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mainViewId:
-                int position = mRecyclerView.getAdapter();
-                CardViewBehavior behavior = new CardViewBehavior(0, mRecyclerView, position);
-                behavior.prepareToShow();
-                behavior.show();
+                int position = mRecyclerView.getLayoutManager().getPosition(v);
+                mCardBehavior.expand(position);
                 Log.e(TAG, "hey clicking");
                 break;
         }
     }
 
 
+    @Override
+    public void onRestoreRecyclerView() {
+        ArrayList<ShoppingItem> shoppingItems = getData();
+        ((RecyclerviewAdapter) mRecyclerView.getAdapter()).addAllItem(shoppingItems);
+        mCardBehavior.collapse();
+    }
 }

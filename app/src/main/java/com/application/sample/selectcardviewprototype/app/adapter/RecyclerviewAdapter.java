@@ -12,19 +12,21 @@ import android.widget.TextView;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by davide on 04/09/15.
  */
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ShoppingItemViewHolder> {
-    private List<ShoppingItem> ShoppingItemList;
+    private List<ShoppingItem> mShoppingItemList;
     private Context mContext;
     private View.OnClickListener mListnerRef;
 
     public RecyclerviewAdapter(Context ctx, List<ShoppingItem> list, Fragment fragRef) {
-        ShoppingItemList = list;
+        mShoppingItemList = list;
         mContext = ctx;
         mListnerRef = (View.OnClickListener) fragRef;
     }
@@ -37,7 +39,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public void onBindViewHolder(ShoppingItemViewHolder vh, int i) {
-        ShoppingItem ShoppingItem = ShoppingItemList.get(i);
+        ShoppingItem ShoppingItem = mShoppingItemList.get(i);
         //Setting text view title
         vh.textView.setText(ShoppingItem.getName());
         vh.mainView.setOnClickListener(mListnerRef);
@@ -45,9 +47,12 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public int getItemCount() {
-        return (null != ShoppingItemList ? ShoppingItemList.size() : 0);
+        return (null != mShoppingItemList ? mShoppingItemList.size() : 0);
     }
 
+    /**
+     *
+     */
     public static class ShoppingItemViewHolder extends RecyclerView.ViewHolder {
         private final CardView mainView;
         protected ImageView imageView;
@@ -60,4 +65,29 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             this.textView = (TextView) view.findViewById(R.id.nameTextViewId);
         }
     }
+
+    /**
+     *
+     * @param pos
+     */
+    public void leaveSelectedItem(int pos) {
+        ShoppingItem itemTemp = mShoppingItemList.get(pos);
+        mShoppingItemList.clear();
+        mShoppingItemList.add(itemTemp);
+        notifyDataSetChanged();
+ //        notifyItemInserted(0);
+    }
+
+    /**
+     *
+     * @param items
+     */
+    public void addAllItem(ArrayList<ShoppingItem> items) {
+        mShoppingItemList.clear();
+        notifyDataSetChanged();
+
+        mShoppingItemList.addAll(items);
+        notifyItemRangeInserted(0, items.size());
+    }
+
 }

@@ -2,17 +2,30 @@ package com.application.sample.selectcardviewprototype.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.application.sample.selectcardviewprototype.app.fragment.OnRestoreRecyclerViewInterface;
 import com.application.sample.selectcardviewprototype.app.fragment.PlaceholderFragment;
+import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
+
+import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.*;
+import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.*;
+import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.NOT_SET;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "Main";
+    private StatusSingleton mStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mStatus = getInstance();
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -37,6 +50,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mStatus.getStatus() == SELECTED) {
+            getFragment().onRestoreRecyclerView();
+            mStatus.setStatus(NOT_SET);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    private OnRestoreRecyclerViewInterface getFragment() {
+        int size = getSupportFragmentManager().getFragments().size();
+        return ((OnRestoreRecyclerViewInterface) getSupportFragmentManager()
+                .getFragments().get(size - 1));
     }
 
 }
