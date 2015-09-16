@@ -29,9 +29,14 @@
 
 
     <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewId"
-                android:layout_below="@id/titleBehaviorId"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
-
+            android:id="@+id/recyclerViewId"
+            android:layout_below="@id/titleBehaviorId"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+    <View
+            android:id="@+id/overalayViewId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/material_blue_grey_800"
+            android:visibility="gone"/>
 </RelativeLayout>

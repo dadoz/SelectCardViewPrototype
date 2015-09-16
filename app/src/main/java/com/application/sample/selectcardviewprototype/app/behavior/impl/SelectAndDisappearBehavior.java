@@ -7,7 +7,12 @@ import android.view.View;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
 import com.application.sample.selectcardviewprototype.app.behavior.CardViewBehaviorInterface;
+import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
@@ -20,6 +25,7 @@ public class SelectAndDisappearBehavior  implements CardViewBehaviorInterface {
     private final Activity mActivity;
     private final RecyclerView mRecyclerView;
     private final StatusSingleton mStatus;
+    private ArrayList<ShoppingItem> mOldItems;
 
     public SelectAndDisappearBehavior(RecyclerView recyclerView, Activity activity) {
         mActivity = activity;
@@ -45,8 +51,17 @@ public class SelectAndDisappearBehavior  implements CardViewBehaviorInterface {
      */
     private void select(int position) {
         Log.e(TAG, "" + position);
+        copyOldList();
         ((RecyclerviewAdapter) mRecyclerView.getAdapter()).leaveSelectedItem(position);
         mStatus.setStatus(SELECTED);
+    }
+
+    /**
+     *
+     */
+    private void copyOldList() {
+        ArrayList<ShoppingItem> list = ((RecyclerviewAdapter) mRecyclerView.getAdapter()).getAllItems();
+        mOldItems = new ArrayList<ShoppingItem>(list);
     }
 
     @Override
@@ -57,6 +72,7 @@ public class SelectAndDisappearBehavior  implements CardViewBehaviorInterface {
 
     @Override
     public void collapse() {
+        ((RecyclerviewAdapter) mRecyclerView.getAdapter()).addAllItem(mOldItems);
         colorize(false);
     }
 }

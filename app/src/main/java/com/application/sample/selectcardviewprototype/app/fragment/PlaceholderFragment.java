@@ -17,17 +17,23 @@ import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
 import com.application.sample.selectcardviewprototype.app.behavior.CardViewBehavior;
+import com.application.sample.selectcardviewprototype.app.behavior.CardViewBehavior.CardViewBehaviorEnum;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
+import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
 import java.util.ArrayList;
 
+import static com.application.sample.selectcardviewprototype.app.behavior.CardViewBehavior.CardViewBehaviorEnum.APPEAR_OVER;
+import static com.application.sample.selectcardviewprototype.app.behavior.CardViewBehavior.CardViewBehaviorEnum.SELECT_AND_DISAPPEAR;
+import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
 
 /**
      * A placeholder fragment containing a simple view.
      */
 public class PlaceholderFragment extends Fragment
-        implements View.OnClickListener, OnRestoreRecyclerViewInterface, CompoundButton.OnCheckedChangeListener {
+        implements View.OnClickListener, OnRestoreRecyclerViewInterface,
+        CompoundButton.OnCheckedChangeListener {
     private View mRootView;
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
@@ -35,9 +41,13 @@ public class PlaceholderFragment extends Fragment
     SwitchCompat mBehaviorSwitch;
     @Bind(R.id.titleBehaviorId)
     TextView titleBehaviorTextview;
+
     private String TAG = "PlaceholderFragment";
     private CardViewBehavior mCardBehavior;
+    private CardViewBehaviorEnum mInitialBehavior = APPEAR_OVER;
     private View mV;
+    private StatusSingleton mStatus;
+
 
     public PlaceholderFragment() {
     }
@@ -47,6 +57,7 @@ public class PlaceholderFragment extends Fragment
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, mRootView);
+        mStatus = StatusSingleton.getInstance();
         onInitView();
         return mRootView;
     }
@@ -59,13 +70,29 @@ public class PlaceholderFragment extends Fragment
 
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(getActivity(), shoppingItems, this);
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity());
-        DefaultItemAnimator animator = new DefaultItemAnimator();
         mRecyclerView.setLayoutManager(lm);
-        mRecyclerView.setItemAnimator(animator);
         mRecyclerView.setAdapter(adapter);
 
-        mCardBehavior = CardViewBehavior.getInstance(0, mRecyclerView, getActivity());
+        setCardviewBehavior();
+
         mBehaviorSwitch.setOnCheckedChangeListener(this);
+    }
+
+    /**
+     *
+     */
+    private void setCardviewBehavior() {
+        mCardBehavior = CardViewBehavior.getInstance(mInitialBehavior, mRecyclerView, getActivity());
+        titleBehaviorTextview.setText("AppearOver");
+    }
+
+    /**
+     *
+     * @param isToggling
+     */
+    private void setCardviewBehavior(boolean isToggling) {
+        mCardBehavior.setBehavior(isToggling ? SELECT_AND_DISAPPEAR : APPEAR_OVER);
+        titleBehaviorTextview.setText(isToggling ? "SelectAndDisappear" : "AppearOver");
     }
 
     /**
@@ -83,6 +110,10 @@ public class PlaceholderFragment extends Fragment
 
     @Override
     public void onClick(View v) {
+        if (mStatus.getStatus() == SELECTED) {
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.mainViewId:
                 int position = mRecyclerView.getLayoutManager().getPosition(v);
@@ -95,15 +126,15 @@ public class PlaceholderFragment extends Fragment
 
     @Override
     public void onRestoreRecyclerView() {
-        ArrayList<ShoppingItem> shoppingItems = getData();
-        ((RecyclerviewAdapter) mRecyclerView.getAdapter()).addAllItem(shoppingItems);
         mCardBehavior.collapse();
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean toggling) {
-        mCardBehavior.collapse();
-        titleBehaviorTextview.setText(toggling ? "SelectAndDisappear" : "AppearOver");
-        mCardBehavior.setBehavior(toggling ? 0 : 1);
+        if (mStatus.getStatus() == SELECTED) {
+            mCardBehavior.collapse();
+        }
+        setCardviewBehavior(toggling);
     }
+
 }

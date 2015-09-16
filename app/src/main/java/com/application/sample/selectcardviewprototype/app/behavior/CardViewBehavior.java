@@ -6,6 +6,8 @@ import com.application.sample.selectcardviewprototype.app.behavior.impl.AppearOv
 import com.application.sample.selectcardviewprototype.app.behavior.impl.SelectAndDisappearBehavior;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
+import static com.application.sample.selectcardviewprototype.app.behavior.CardViewBehavior.CardViewBehaviorEnum.SELECT_AND_DISAPPEAR;
+
 
 /**
  * Created by davide on 10/09/15.
@@ -17,14 +19,15 @@ public class CardViewBehavior {
     private final StatusSingleton mStatus;
     private final Activity mActivity;
     private String TAG = "CardViewBehavior";
+    public enum CardViewBehaviorEnum { SELECT_AND_DISAPPEAR, APPEAR_OVER }
 
-    public static CardViewBehavior getInstance(int indexBeahvior, RecyclerView recyclerView, Activity activity) {
+    public static CardViewBehavior getInstance(CardViewBehaviorEnum indexBeahvior, RecyclerView recyclerView, Activity activity) {
         return mCardViewBehavior == null ?
                 mCardViewBehavior = new CardViewBehavior(indexBeahvior, recyclerView, activity) :
                 mCardViewBehavior;
     }
 
-    private CardViewBehavior(int indexBeahvior, RecyclerView recyclerView, Activity activity) {
+    private CardViewBehavior(CardViewBehaviorEnum indexBeahvior, RecyclerView recyclerView, Activity activity) {
         mRecyclerView = recyclerView;
         mStatus = StatusSingleton.getInstance();
         mActivity = activity;
@@ -33,10 +36,10 @@ public class CardViewBehavior {
 
     /**
      *
-     * @param indexBeahvior
+     * @param indexBeahavior
      */
-    public void setBehavior(int indexBeahvior) {
-        mBehavior = indexBeahvior == 0 ?
+    public void setBehavior(CardViewBehaviorEnum indexBeahavior) {
+        mBehavior = indexBeahavior == SELECT_AND_DISAPPEAR ?
                 new SelectAndDisappearBehavior(mRecyclerView, mActivity) : new AppearOverBehavior(mRecyclerView, mActivity);
     }
 

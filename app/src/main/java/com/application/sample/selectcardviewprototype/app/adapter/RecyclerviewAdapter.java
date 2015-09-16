@@ -21,11 +21,11 @@ import java.util.Objects;
  */
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ShoppingItemViewHolder> {
-    private List<ShoppingItem> mShoppingItemList;
+    private ArrayList<ShoppingItem> mShoppingItemList;
     private Context mContext;
     private View.OnClickListener mListnerRef;
 
-    public RecyclerviewAdapter(Context ctx, List<ShoppingItem> list, Fragment fragRef) {
+    public RecyclerviewAdapter(Context ctx, ArrayList<ShoppingItem> list, Fragment fragRef) {
         mShoppingItemList = list;
         mContext = ctx;
         mListnerRef = (View.OnClickListener) fragRef;
@@ -48,6 +48,10 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     @Override
     public int getItemCount() {
         return (null != mShoppingItemList ? mShoppingItemList.size() : 0);
+    }
+
+    public ArrayList<ShoppingItem> getAllItems() {
+        return mShoppingItemList;
     }
 
     /**
