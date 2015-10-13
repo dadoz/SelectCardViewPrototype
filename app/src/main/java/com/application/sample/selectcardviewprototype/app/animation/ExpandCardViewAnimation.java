@@ -11,32 +11,50 @@ import android.view.animation.Transformation;
 public class ExpandCardViewAnimation extends Animation {
     private final int targetHeight;
     private final View view;
-    private final boolean down;
+    private final boolean isDown;
     private final int initialHeight;
+    private final int marginTop;
 
-    public ExpandCardViewAnimation(View view, int initialHeight, int targetHeight, boolean down) {
+    public ExpandCardViewAnimation(View view, int initialHeight, int targetHeight, int marginTop, boolean isDown) {
         this.view = view;
+        this.isDown = isDown;
         this.targetHeight = targetHeight;
-        this.down = down;
         this.initialHeight = initialHeight;
+        this.marginTop = marginTop;         //TODO calculate this offset
+        Log.e("TAG", "" + marginTop);
     }
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
-//            interpolatedTime = down ? interpolatedTime : (1 - interpolatedTime);
-        view.getLayoutParams().height = getScaledHeight(down, interpolatedTime);
-        view.requestLayout();
+        view.getLayoutParams().height = getScaledHeight(interpolatedTime);
+        //over sampling to smooth transition
+        float y = getDeltaTraslation(interpolatedTime);
+        for (int i = 0; i < 2; i ++) {
+            float yTranslation = (i == 0) ? y / 2 : y;
+            view.setTranslationY(yTranslation);
+            view.requestLayout();
+        }
+    }
+
+    /**
+     * 
+     * @param interpolatedTime
+     * @return
+     */
+    public float getDeltaTraslation(float interpolatedTime) {
+        return isDown ?
+                - marginTop * interpolatedTime :
+                marginTop * interpolatedTime;
     }
 
     /**
      *
-     * @param down
      * @param interpolatedTime
      * @return
      */
-    private int getScaledHeight(boolean down, float interpolatedTime) {
+    private int getScaledHeight(float interpolatedTime) {
         int deltaHeight = (initialHeight - targetHeight);
-        return down ?
+        return isDown ?
                 initialHeight + (int) (targetHeight * interpolatedTime) :
                 initialHeight - (int) (deltaHeight * interpolatedTime);
     }
@@ -51,4 +69,5 @@ public class ExpandCardViewAnimation extends Animation {
     public boolean willChangeBounds() {
         return true;
     }
+
 }

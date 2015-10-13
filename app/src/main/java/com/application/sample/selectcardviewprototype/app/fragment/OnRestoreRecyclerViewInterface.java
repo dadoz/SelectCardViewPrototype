@@ -5,4 +5,5 @@ package com.application.sample.selectcardviewprototype.app.fragment;
  */
 public interface OnRestoreRecyclerViewInterface {
     public void onRestoreRecyclerView();
+    public void destroyBehavior();
 }

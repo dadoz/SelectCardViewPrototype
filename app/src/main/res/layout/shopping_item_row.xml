@@ -5,8 +5,8 @@
         android:clickable="true"
         android:id="@+id/mainViewId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/medium_padding"
+        android:layout_height="120dp"
+        android:layout_marginBottom="@dimen/medium_large_padding"
         android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
             android:layout_width="fill_parent"
@@ -16,19 +16,31 @@
         <ImageView
                 android:id="@+id/thumbnailImageViewId"
                 android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/medium_padding"
+
+            android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher"/>
         <TextView
-                android:id="@+id/nameTextViewId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/thumbnailImageViewId"
-                android:layout_marginLeft="@dimen/medium_padding"
-                android:layout_centerInParent="true"
-                android:textSize="18sp"
-                android:textColor="@color/abc_primary_text_material_light"
-                android:text="sample"/>
+            android:id="@+id/nameTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/thumbnailImageViewId"
+            android:layout_marginLeft="@dimen/medium_padding"
+            android:textSize="24sp"
+            android:textColor="@color/material_red900"
+            android:text="sample"/>
+        <TextView
+            android:id="@+id/descriptionTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameTextViewId"
+            android:layout_marginTop="@dimen/small_padding"
+            android:layout_marginLeft="@dimen/medium_padding"
+            android:layout_toRightOf="@id/thumbnailImageViewId"
+            android:textSize="16sp"
+            android:textColor="@color/material_blue_grey_950"
+            android:text="this is my content text - u should fill it with sm fake description like the one u're imagine right now."/>
     </RelativeLayout>
         </android.support.v7.widget.CardView>

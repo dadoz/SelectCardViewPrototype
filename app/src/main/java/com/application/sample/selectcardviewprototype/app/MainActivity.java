@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             mStatus.setStatus(NOT_SET);
             return;
         }
+        getFragment().destroyBehavior();
         super.onBackPressed();
     }
 

@@ -6,12 +6,11 @@ import android.util.Log;
 import android.view.View;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
-import com.application.sample.selectcardviewprototype.app.behavior.CardViewBehaviorInterface;
+import com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategyInterface;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
@@ -19,7 +18,7 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
 /**
  * Created by davide on 14/09/15.
  */
-public class SelectAndDisappearBehavior  implements CardViewBehaviorInterface {
+public class SelectAndDisappearBehavior  implements CardViewStrategyInterface {
 
     private static final String TAG = "SelectAndDisappearBehav";
     private final Activity mActivity;
@@ -60,7 +59,7 @@ public class SelectAndDisappearBehavior  implements CardViewBehaviorInterface {
      *
      */
     private void copyOldList() {
-        ArrayList<ShoppingItem> list = ((RecyclerviewAdapter) mRecyclerView.getAdapter()).getAllItems();
+        List<ShoppingItem> list = ((RecyclerviewAdapter) mRecyclerView.getAdapter()).getAllItems();
         mOldItems = new ArrayList<ShoppingItem>(list);
     }
 
