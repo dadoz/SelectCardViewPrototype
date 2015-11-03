@@ -9,11 +9,13 @@ public class ShoppingItem {
     private String id;
     private Bitmap thumbnail;
     private String name;
+    private String description;
 
-    public ShoppingItem(String id, Bitmap thumbnail, String name) {
+    public ShoppingItem(String id, Bitmap thumbnail, String name, String description) {
         this.id = id;
         this.thumbnail = thumbnail;
         this.name = name;
+        this.description = description;
     }
 
     public Bitmap getThumbnail() {
@@ -30,5 +32,9 @@ public class ShoppingItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

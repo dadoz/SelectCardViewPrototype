@@ -32,7 +32,6 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
      */
 public class ShoppingListFragment extends Fragment
         implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom {
-    private View mRootView;
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
     @Bind(R.id.overlayViewId)
@@ -48,11 +47,11 @@ public class ShoppingListFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, mRootView);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, view);
         mStatus = StatusSingleton.getInstance();
         onInitView();
-        return mRootView;
+        return view;
     }
 
     /**
@@ -98,13 +97,13 @@ public class ShoppingListFragment extends Fragment
      */
     public ArrayList<ShoppingItem> getData() {
         ArrayList<ShoppingItem> list = new ArrayList<ShoppingItem>();
-        list.add(new ShoppingItem("id0", null, "sample1"));
-        list.add(new ShoppingItem("id1", null, "sample2"));
-        list.add(new ShoppingItem("id2", null, "sample3"));
-        list.add(new ShoppingItem("id3", null, "sample4"));
-        list.add(new ShoppingItem("id3", null, "sample5"));
-        list.add(new ShoppingItem("id3", null, "sample6"));
-        list.add(new ShoppingItem("id3", null, "sample7"));
+        list.add(new ShoppingItem("id0", null, "Flour", "sample description"));
+        list.add(new ShoppingItem("id1", null, "Soap", "sample description 2"));
+        list.add(new ShoppingItem("id2", null, "Eggs", "sample description 3"));
+        list.add(new ShoppingItem("id3", null, "Onions", "sample description 4"));
+        list.add(new ShoppingItem("id3", null, "Potatoes", "sample description 5"));
+        list.add(new ShoppingItem("id3", null, "Bacon", "sample description 6"));
+        list.add(new ShoppingItem("id3", null, "Tomato Sauce", "sample description 7"));
         return list;
     }
 

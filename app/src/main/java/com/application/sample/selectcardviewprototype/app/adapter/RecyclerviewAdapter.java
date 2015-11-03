@@ -59,7 +59,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     public static class ShoppingItemViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-//        private ImageView imageView;
+        private final TextView descriptionTextView;
         private TextView textView;
         private final WeakReference<OnItemSelectedListenerCustom> listener;
         private int currentPosition;
@@ -68,6 +68,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             super(view);
 //            this.imageView = (ImageView) view.findViewById(R.id.thumbnailImageViewId);
             this.textView = (TextView) view.findViewById(R.id.nameTextViewId);
+            this.descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextViewId);
 
             this.listener = listener;
         }
@@ -75,6 +76,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         public void bindTo(ShoppingItem item, int currentPosition) {
             this.currentPosition = currentPosition;
             textView.setText(item.getName());
+            descriptionTextView.setText(item.getDescription());
         }
 
         @Override

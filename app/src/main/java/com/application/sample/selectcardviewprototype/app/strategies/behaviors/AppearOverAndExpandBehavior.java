@@ -147,7 +147,10 @@ public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
         CardView.LayoutParams lp = (CardView.LayoutParams) view.getLayoutParams();
         lp.setMargins(0, oldMarginTop, 0, 0);
         view.setLayoutParams(lp);
-        ((TextView) view.findViewById(R.id.nameTextViewId)).setText(selectedItem.getName());
+        ((TextView) view.findViewById(R.id.nameTextViewId))
+                .setText(selectedItem.getName());
+        ((TextView) view.findViewById(R.id.descriptionTextViewId))
+                .setText(selectedItem.getDescription());
     }
 
     /**
