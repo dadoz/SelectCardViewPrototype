@@ -21,17 +21,20 @@ public class ExpandCardViewAnimation extends Animation {
         this.targetHeight = targetHeight;
         this.initialHeight = initialHeight;
         this.marginTop = marginTop;         //TODO calculate this offset
-        Log.e("TAG", "" + marginTop);
+//        Log.e("TAG", "" + marginTop);
     }
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         view.getLayoutParams().height = getScaledHeight(interpolatedTime);
         //over sampling to smooth transition
-        float y = getDeltaTraslation(interpolatedTime);
+        float y = getDeltaTranslation(interpolatedTime);
+//        Log.e("TAG", "translation" + y);
         for (int i = 0; i < 2; i ++) {
             float yTranslation = (i == 0) ? y / 2 : y;
-            view.setTranslationY(yTranslation);
+            if (isDown) {
+                view.setTranslationY(yTranslation);
+            }
             view.requestLayout();
         }
     }
@@ -41,7 +44,7 @@ public class ExpandCardViewAnimation extends Animation {
      * @param interpolatedTime
      * @return
      */
-    public float getDeltaTraslation(float interpolatedTime) {
+    public float getDeltaTranslation(float interpolatedTime) {
         return isDown ?
                 - marginTop * interpolatedTime :
                 marginTop * interpolatedTime;

@@ -21,11 +21,11 @@ import java.util.List;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ShoppingItemViewHolder> {
     private final List<ShoppingItem> shoppingItemList;
-    private final WeakReference<OnLmnItemSelectedListener> listener;
+    private final WeakReference<OnItemSelectedListenerCustom> listener;
 
 
     public RecyclerviewAdapter(ArrayList<ShoppingItem> list,
-                               WeakReference<OnLmnItemSelectedListener> listener) {
+                               WeakReference<OnItemSelectedListenerCustom> listener) {
 
         shoppingItemList = list;
         this.listener = listener;
@@ -61,10 +61,10 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
 //        private ImageView imageView;
         private TextView textView;
-        private final WeakReference<OnLmnItemSelectedListener> listener;
+        private final WeakReference<OnItemSelectedListenerCustom> listener;
         private int currentPosition;
 
-        public ShoppingItemViewHolder(View view, WeakReference<OnLmnItemSelectedListener> listener) {
+        public ShoppingItemViewHolder(View view, WeakReference<OnItemSelectedListenerCustom> listener) {
             super(view);
 //            this.imageView = (ImageView) view.findViewById(R.id.thumbnailImageViewId);
             this.textView = (TextView) view.findViewById(R.id.nameTextViewId);
@@ -107,7 +107,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         notifyItemRangeInserted(0, items.size());
     }
 
-    public interface OnLmnItemSelectedListener {
+    public interface OnItemSelectedListenerCustom {
         void onItemClicked(int selectedPosition);
     }
 

@@ -1,5 +1,6 @@
 package com.application.sample.selectcardviewprototype.app.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
 import com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategy;
+import com.application.sample.selectcardviewprototype.app.behavior.impl.AppearOverAndExpandStrategy;
 import com.application.sample.selectcardviewprototype.app.behavior.impl.AppearOverBehavior;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
@@ -33,7 +35,7 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
      */
 public class PlaceholderFragment extends Fragment
         implements OnRestoreRecyclerViewInterface,
-        CompoundButton.OnCheckedChangeListener, RecyclerviewAdapter.OnLmnItemSelectedListener {
+        CompoundButton.OnCheckedChangeListener, RecyclerviewAdapter.OnItemSelectedListenerCustom {
     private View mRootView;
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
@@ -77,7 +79,7 @@ public class PlaceholderFragment extends Fragment
      */
     private void initRecyclerView(ArrayList<ShoppingItem> shoppingItems) {
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(shoppingItems,
-                new WeakReference<RecyclerviewAdapter.OnLmnItemSelectedListener>(this));
+                new WeakReference<RecyclerviewAdapter.OnItemSelectedListenerCustom>(this));
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(lm);
         mRecyclerView.setAdapter(adapter);
@@ -96,7 +98,8 @@ public class PlaceholderFragment extends Fragment
      */
     private void setCardviewBehavior(boolean isToggling) {
         cardBehavior = CardViewStrategy.getInstance();
-        cardBehavior.setBehavior(new AppearOverBehavior(mRecyclerView, getActivity(), mOverlayView));
+        cardBehavior.setStrategy(new AppearOverAndExpandStrategy(mRecyclerView,
+                new WeakReference<Activity>(getActivity()), mOverlayView));
 //        cardBehavior.setBehavior(isToggling ? SELECT_AND_DISAPPEAR : APPEAR_OVER);
         titleBehaviorTextview.setText(isToggling ? "SelectAndDisappear" : "AppearOver");
     }

@@ -44,12 +44,12 @@ public class ExpandInListBehavior implements CardViewStrategyInterface {
      * @param view
      */
     public void animate(View view,int initialHeight, int finalHeight, boolean down) {
-        ExpandCardViewAnimation animation = new ExpandCardViewAnimation(view, initialHeight, finalHeight, 0, down);
-        animation.setInterpolator(new AccelerateInterpolator());
-        animation.setDuration(500);
-        view.setAnimation(animation);
-        view.animate().start();
-        view.invalidate();
+//        ExpandCardViewAnimation animation = new ExpandCardViewAnimation(view, initialHeight, finalHeight, 0, down);
+//        animation.setInterpolator(new AccelerateInterpolator());
+//        animation.setDuration(500);
+//        view.setAnimation(animation);
+//        view.animate().start();
+//        view.invalidate();
     }
 
     /**

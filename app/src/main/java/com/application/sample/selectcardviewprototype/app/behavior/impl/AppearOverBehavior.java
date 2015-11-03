@@ -7,16 +7,18 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
-import com.application.sample.selectcardviewprototype.app.animation.ExpandCardViewAnimation;
 import com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategyInterface;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
+
+import java.lang.ref.WeakReference;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.NOT_SET;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
@@ -25,17 +27,17 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
  * Created by davide on 14/09/15.
  */
 public class AppearOverBehavior implements CardViewStrategyInterface {
-    private static final long ANIMATION_DURATION_TIME = 400;
-    private static final long ANIMATION_DELAY_TIME = 150;
-    private final Activity activity;
+//    private static final int ANIMATION_DURATION_TIME = android.R.integer.config_mediumAnimTime;
+//    private static final long ANIMATION_DELAY_TIME = 150;
+    private final WeakReference<Activity> activity;
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
     private final FrameLayout frameLayout;
     private int marginTop;
     private View selectedView;
-    private int viewInitialHeight;
+//    private int viewInitialHeight;
 
-    public AppearOverBehavior(RecyclerView recyclerView, Activity activity, FrameLayout frameLayout) {
+    public AppearOverBehavior(RecyclerView recyclerView, WeakReference<Activity> activity, FrameLayout frameLayout) {
         this.activity = activity;
         this.recyclerView = recyclerView;
         this.frameLayout = frameLayout;
@@ -46,71 +48,71 @@ public class AppearOverBehavior implements CardViewStrategyInterface {
      *
      * @param selecting
      */
-    private void colorize(boolean selecting) {
-        int color = activity.getResources().getColor(selecting ? R.color.material_blue_grey_950 :
-                R.color.cardview_light_background);
-        if (selectedView != null) {
-            selectedView.setBackgroundColor(color);
-        }
-    }
+//    private void colorize(boolean selecting) {
+//        int color = activity.get().getResources().getColor(selecting ? R.color.material_blue_grey_950 :
+//                R.color.cardview_light_background);
+//        if (selectedView != null) {
+//            selectedView.setBackgroundColor(color);
+//        }
+//    }
 
-    /**
-     *
-     * @param isDown
-     */
-    public void animate(View view, boolean isDown) {
-        view.clearAnimation();
-        ExpandCardViewAnimation animation = getAnimation(view, isDown);
-        view.setAnimation(animation);
-        view.animate();
-        view.invalidate();
-    }
-
-    /**
-     *
-     * @param isDown
-     * @return
-     */
-    public ExpandCardViewAnimation getAnimation(View view, boolean isDown) {
-        //0 - initialHeight
-        //1 - finalHeight
-        //2 - marginTop
-        int [] animParams = initAnimParams(view, isDown);
-        ExpandCardViewAnimation animation = new ExpandCardViewAnimation(view, animParams[0], animParams[1], animParams[2], isDown);
-        animation.setInterpolator(new AccelerateInterpolator());
-        animation.setDuration(ANIMATION_DURATION_TIME);
-        animation.setAnimationListener(new AnimationListenerCustom(this, isDown));
-        return animation;
-    }
-
-    /**
-     * params
-     *
-     * 0 - initialHeight
-     * 1 - finalHeight
-     * 2 - marginTop
-     *
-     * @param view
-     * @param isDown
-     * @return
-     */
-    private int[] initAnimParams(View view, boolean isDown) {
-        if (isDown) {
-            viewInitialHeight = view.getHeight();
-            return new int [] {
-                    view.getHeight(),
-                    recyclerView.getHeight(),
-                    getMarginTop()
-            };
-
-        }
-        //else get back
-        return new int [] {
-                recyclerView.getHeight(),
-                viewInitialHeight,
-                getMarginTop()
-        };
-    }
+//    /**
+//     *
+//     * @param isDown
+//     */
+//    public void animate(View view, boolean isDown) {
+//        view.clearAnimation();
+//        ExpandCardViewAnimation animation = getAnimation(view, isDown);
+//        view.setAnimation(animation);
+//        view.animate();
+//        view.invalidate();
+//    }
+//
+//    /**
+//     *
+//     * @param isDown
+//     * @return
+//     */
+//    public ExpandCardViewAnimation getAnimation(View view, boolean isDown) {
+//        //0 - initialHeight
+//        //1 - finalHeight
+//        //2 - marginTop
+//        int [] animParams = initAnimParams(view, isDown);
+//        ExpandCardViewAnimation animation = new ExpandCardViewAnimation(view, animParams[0], animParams[1], animParams[2], isDown);
+//        animation.setInterpolator(new AccelerateInterpolator());
+//        animation.setDuration(activity.get().getResources().getInteger(ANIMATION_DURATION_TIME));
+//        animation.setAnimationListener(new AnimationListenerCustom(this, isDown));
+//        return animation;
+//    }
+//
+//    /**
+//     * params
+//     *
+//     * 0 - initialHeight
+//     * 1 - finalHeight
+//     * 2 - marginTop
+//     *
+//     * @param view
+//     * @param isDown
+//     * @return
+//     */
+//    private int[] initAnimParams(View view, boolean isDown) {
+//        if (isDown) {
+//            viewInitialHeight = view.getHeight();
+//            return new int [] {
+//                    view.getHeight(),
+//                    recyclerView.getHeight(),
+//                    getMarginTop()
+//            };
+//        }
+//
+//        //else get back
+//        return new int [] {
+//                recyclerView.getHeight(),
+//                viewInitialHeight,
+//                getMarginTop()
+//        };
+//    }
 
     /**
      * callback to be called on animation ends
@@ -119,46 +121,50 @@ public class AppearOverBehavior implements CardViewStrategyInterface {
     public void onFinishAnimationCallback(boolean isDown) {
         if (! isDown) {
             showOverLayout(false);
-            recyclerView.setVisibility(View.VISIBLE);
+//            fadeToShowRecyclerView(true);
         }
 //        ((View) frameLayout.getParent()).setBackgroundColor(false ? activity.getResources().getColor(R.color.material_deep_teal_500) : Color.WHITE);
     }
 
     /**
      *
-     * @return int
      */
-    private int getParentHeight() {
-        int height = activity.getWindow().getDecorView().getHeight(); //TODO must be changed
-        return height;
-    }
+//    private void fadeToShowRecyclerView(boolean isShowing) {
+//        float initAlpha = isShowing ? 1 : 0;
+//        float finalAlpha = isShowing ? 0 : 1;
+//        int duration = activity.get().getResources().getInteger(ANIMATION_DURATION_TIME);
+//        AlphaAnimation animation = new AlphaAnimation(initAlpha, finalAlpha);
+//        animation.setDuration(duration);
+//        recyclerView.setAnimation(animation);
+//        recyclerView.animate();
+//    }
 
     @Override
     public void expand(int position) {
         status.setStatus(SELECTED);
-        recyclerView.setVisibility(View.GONE);
-        selectedView = recyclerView.getChildAt(position);
+//        fadeToShowRecyclerView(false);
+        selectedView = recyclerView.getLayoutManager().findViewByPosition(position);
         marginTop = getMarginTop();
         ShoppingItem selectedItem = getSelectedItem(position);
-//        colorize(true);
         View cardView = initOverLayout(selectedItem);
-        animatePostDelayed(cardView);
+//        animatePostDelayed(cardView);
+//        animate(cardView, true);
     }
 
-    /**
-     * @// TODO: 13/10/15 refactor do not compile with this
-     * @deprecated
-     * @param cardView
-     */
-    private void animatePostDelayed(final View cardView) {
-        Handler hd = new Handler();
-        hd.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animate(cardView, true);
-            }
-        }, ANIMATION_DELAY_TIME);
-    }
+//    /**
+//     * @// TODO: 13/10/15 refactor do not compile with this
+//     * @deprecated
+//     * @param cardView
+//     */
+//    private void animatePostDelayed(final View cardView) {
+//        Handler hd = new Handler();
+//        hd.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                animate(cardView, true);
+//            }
+//        }, ANIMATION_DELAY_TIME);
+//    }
 
     /**
      *
@@ -177,7 +183,7 @@ public class AppearOverBehavior implements CardViewStrategyInterface {
      * @return
      */
     private View inflateCardView() {
-        View view = activity.getLayoutInflater().inflate(R.layout.shopping_item_row, frameLayout);
+        View view = activity.get().getLayoutInflater().inflate(R.layout.shopping_item_row, frameLayout);
         return view.findViewById(R.id.mainViewId);
     }
 
@@ -217,10 +223,8 @@ public class AppearOverBehavior implements CardViewStrategyInterface {
     @Override
     public void collapse() {
         status.setStatus(NOT_SET);
-//        colorize(false);
-//        showOverLayout(false);
         View cardView = getInflatedCardView();
-        animate(cardView, false);
+//        animate(cardView, false);
     }
 
     /**
@@ -228,10 +232,8 @@ public class AppearOverBehavior implements CardViewStrategyInterface {
      * @return
      */
     public int getMarginTop() {
-//        int offset = 25;
-        int offset = -170;
-        return getSelectedViewPosition() - getRecyclerViewPosition() +
-                getActionBarHeight() + offset;
+        int offset = 0;
+        return getSelectedViewPosition() - getRecyclerViewPosition() + offset;
     }
 
     public View getInflatedCardView() {
@@ -270,11 +272,11 @@ public class AppearOverBehavior implements CardViewStrategyInterface {
      *
      * @return
      */
-    public int getActionBarHeight() {
-        return (int) activity.getTheme()
-                .obtainStyledAttributes(new int[]{android.R.attr.actionBarSize})
-                .getDimension(0, 0);
-    }
+//    public int getActionBarHeight() {
+//        return (int) activity.get().getTheme()
+//                .obtainStyledAttributes(new int[]{android.R.attr.actionBarSize})
+//                .getDimension(0, 0);
+//    }
 
     public static class AnimationListenerCustom implements Animation.AnimationListener {
         private final AppearOverBehavior callback;

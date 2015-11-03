@@ -4,22 +4,22 @@ package com.application.sample.selectcardviewprototype.app.behavior;
  * Created by davide on 10/09/15.
  */
 public class CardViewStrategy {
-    public static CardViewStrategy mCardViewBehavior;
-    private CardViewStrategyInterface mBehavior;
+    public static CardViewStrategy cardViewStrategyRef;
+    private CardViewStrategyInterface strategyRef;
 
     public enum CardViewBehaviorEnum { SELECT_AND_DISAPPEAR, APPEAR_OVER, EXPAND_IN_LIST }
 
     public static CardViewStrategy getInstance() {
-        return mCardViewBehavior == null ?
-s                mCardViewBehavior = new CardViewStrategy() :
-                mCardViewBehavior;
+        return cardViewStrategyRef == null ?
+                cardViewStrategyRef = new CardViewStrategy() :
+                cardViewStrategyRef;
     }
 
     private CardViewStrategy() {
     }
 
-    public void setBehavior(CardViewStrategyInterface cardViewStrategy) {
-        mBehavior = cardViewStrategy;
+    public void setStrategy(CardViewStrategyInterface ref) {
+        strategyRef = ref;
     }
 
     /**
@@ -28,11 +28,11 @@ s                mCardViewBehavior = new CardViewStrategy() :
      */
 //    public void setBehavior(CardViewBehaviorEnum behaviorId) {
 //        if (behaviorId == SELECT_AND_DISAPPEAR) {
-//            mBehavior = new SelectAndDisappearBehavior(mRecyclerView, mActivity);
+//            strategyRef = new SelectAndDisappearBehavior(mRecyclerView, mActivity);
 //        } else if (behaviorId == EXPAND_IN_LIST) {
-//            mBehavior = new ExpandInListBehavior(mRecyclerView, mActivity);
+//            strategyRef = new ExpandInListBehavior(mRecyclerView, mActivity);
 //        } else if (behaviorId == APPEAR_OVER) {
-//            mBehavior = new AppearOverBehavior(mRecyclerView, mActivity, frameLayout);
+//            strategyRef = new AppearOverBehavior(mRecyclerView, mActivity, frameLayout);
 //        }
 //    }
 
@@ -41,14 +41,14 @@ s                mCardViewBehavior = new CardViewStrategy() :
      * @param position
      */
     public void expand(int position) {
-        mBehavior.expand(position);
+        strategyRef.expand(position);
     }
 
     /**
      *
      */
     public void collapse() {
-        mBehavior.collapse();
+        strategyRef.collapse();
     }
 
 
