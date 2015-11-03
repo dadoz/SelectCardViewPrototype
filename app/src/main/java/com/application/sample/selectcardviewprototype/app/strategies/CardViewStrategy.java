@@ -1,4 +1,4 @@
-package com.application.sample.selectcardviewprototype.app.behavior;
+package com.application.sample.selectcardviewprototype.app.strategies;
 
 /**
  * Created by davide on 10/09/15.
@@ -21,20 +21,6 @@ public class CardViewStrategy {
     public void setStrategy(CardViewStrategyInterface ref) {
         strategyRef = ref;
     }
-
-    /**
-     * @TODO not working at all (on restore applications)
-     * @param behaviorId
-     */
-//    public void setBehavior(CardViewBehaviorEnum behaviorId) {
-//        if (behaviorId == SELECT_AND_DISAPPEAR) {
-//            strategyRef = new SelectAndDisappearBehavior(mRecyclerView, mActivity);
-//        } else if (behaviorId == EXPAND_IN_LIST) {
-//            strategyRef = new ExpandInListBehavior(mRecyclerView, mActivity);
-//        } else if (behaviorId == APPEAR_OVER) {
-//            strategyRef = new AppearOverBehavior(mRecyclerView, mActivity, frameLayout);
-//        }
-//    }
 
     /**
      *

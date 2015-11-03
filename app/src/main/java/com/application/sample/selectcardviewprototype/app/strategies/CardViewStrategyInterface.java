@@ -1,4 +1,4 @@
-package com.application.sample.selectcardviewprototype.app.behavior;
+package com.application.sample.selectcardviewprototype.app.strategies;
 
 /**
  * Created by davide on 14/09/15.

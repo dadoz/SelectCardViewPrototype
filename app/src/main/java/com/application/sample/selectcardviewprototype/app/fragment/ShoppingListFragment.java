@@ -11,47 +11,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
-import android.widget.TextView;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
-import com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategy;
-import com.application.sample.selectcardviewprototype.app.behavior.impl.AppearOverAndExpandStrategy;
-import com.application.sample.selectcardviewprototype.app.behavior.impl.AppearOverBehavior;
+import com.application.sample.selectcardviewprototype.app.strategies.CardViewStrategy;
+import com.application.sample.selectcardviewprototype.app.strategies.behaviors.AppearOverAndExpandBehavior;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategy.CardViewBehaviorEnum.APPEAR_OVER;
-import static com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategy.CardViewBehaviorEnum.SELECT_AND_DISAPPEAR;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
 
 /**
      * A placeholder fragment containing a simple view.
      */
-public class PlaceholderFragment extends Fragment
-        implements OnRestoreRecyclerViewInterface,
-        CompoundButton.OnCheckedChangeListener, RecyclerviewAdapter.OnItemSelectedListenerCustom {
+public class ShoppingListFragment extends Fragment
+        implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom {
     private View mRootView;
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
-    @Bind(R.id.behaviorSwitchCompatId)
-    SwitchCompat mBehaviorSwitch;
-    @Bind(R.id.titleBehaviorId)
-    TextView titleBehaviorTextview;
     @Bind(R.id.overlayViewId)
     FrameLayout mOverlayView;
 
-    private String TAG = "PlaceholderFragment";
     private CardViewStrategy cardBehavior;
     private StatusSingleton mStatus;
 
 
-    public PlaceholderFragment() {
+    public ShoppingListFragment() {
     }
 
     @Override
@@ -70,7 +61,6 @@ public class PlaceholderFragment extends Fragment
     public void onInitView() {
         initRecyclerView(getData());
         setCardviewBehavior();
-        mBehaviorSwitch.setOnCheckedChangeListener(this);
     }
 
     /**
@@ -98,10 +88,8 @@ public class PlaceholderFragment extends Fragment
      */
     private void setCardviewBehavior(boolean isToggling) {
         cardBehavior = CardViewStrategy.getInstance();
-        cardBehavior.setStrategy(new AppearOverAndExpandStrategy(mRecyclerView,
+        cardBehavior.setStrategy(new AppearOverAndExpandBehavior(mRecyclerView,
                 new WeakReference<Activity>(getActivity()), mOverlayView));
-//        cardBehavior.setBehavior(isToggling ? SELECT_AND_DISAPPEAR : APPEAR_OVER);
-        titleBehaviorTextview.setText(isToggling ? "SelectAndDisappear" : "AppearOver");
     }
 
     /**
@@ -127,17 +115,7 @@ public class PlaceholderFragment extends Fragment
 
     @Override
     public void destroyBehavior() {
-//        cardBehavior = null;
     }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean toggling) {
-        if (mStatus.getStatus() == SELECTED) {
-            cardBehavior.collapse();
-        }
-        setCardviewBehavior(toggling);
-    }
-
 
     @Override
     public void onItemClicked(int selectedPosition) {

@@ -1,4 +1,4 @@
-package com.application.sample.selectcardviewprototype.app.behavior.impl;
+package com.application.sample.selectcardviewprototype.app.strategies.behaviors;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -7,16 +7,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
 import com.application.sample.selectcardviewprototype.app.animation.AnimatorBuilder;
-import com.application.sample.selectcardviewprototype.app.behavior.CardViewStrategyInterface;
+import com.application.sample.selectcardviewprototype.app.strategies.CardViewStrategyInterface;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
@@ -28,7 +26,7 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
 /**
  * Created by davide on 14/09/15.
  */
-public class AppearOverAndExpandStrategy implements CardViewStrategyInterface {
+public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
     private final WeakReference<Activity> activity;
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
@@ -37,7 +35,7 @@ public class AppearOverAndExpandStrategy implements CardViewStrategyInterface {
     private View selectedView;
     private AnimatorBuilder animatorBuilder;
 
-    public AppearOverAndExpandStrategy(RecyclerView recyclerView,
+    public AppearOverAndExpandBehavior(RecyclerView recyclerView,
                                        WeakReference<Activity> activity,
                                        FrameLayout frameLayout) {
         this.activity = activity;
@@ -118,16 +116,6 @@ public class AppearOverAndExpandStrategy implements CardViewStrategyInterface {
             }
         });
         animatorSet.start();
-    }
-
-    /**
-     * callback to be called on animation ends
-     * @param isDown
-     */
-    public void onFinishAnimationCallback(boolean isDown) {
-        if (!isDown) {
-            showOverLayout(false);
-        }
     }
 
     /**

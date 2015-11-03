@@ -2,11 +2,10 @@ package com.application.sample.selectcardviewprototype.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.application.sample.selectcardviewprototype.app.fragment.OnRestoreRecyclerViewInterface;
-import com.application.sample.selectcardviewprototype.app.fragment.PlaceholderFragment;
+import com.application.sample.selectcardviewprototype.app.fragment.ShoppingListFragment;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.*;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new ShoppingListFragment())
                     .commit();
         }
     }
