@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
+import com.application.sample.selectcardviewprototype.app.singleton.RetrieveAssetsSingleton;
 import com.application.sample.selectcardviewprototype.app.strategies.CardViewStrategy;
 import com.application.sample.selectcardviewprototype.app.strategies.behaviors.AppearOverAndExpandBehavior;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
@@ -39,6 +47,7 @@ public class ShoppingListFragment extends Fragment
 
     private CardViewStrategy cardBehavior;
     private StatusSingleton mStatus;
+    private RetrieveAssetsSingleton assetsSingleton;
 
 
     public ShoppingListFragment() {
@@ -50,6 +59,7 @@ public class ShoppingListFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
         mStatus = StatusSingleton.getInstance();
+        assetsSingleton = RetrieveAssetsSingleton.getInstance(new WeakReference<Activity>(getActivity()));
         onInitView();
         return view;
     }
@@ -96,15 +106,14 @@ public class ShoppingListFragment extends Fragment
      * @return
      */
     public ArrayList<ShoppingItem> getData() {
-        ArrayList<ShoppingItem> list = new ArrayList<ShoppingItem>();
-        list.add(new ShoppingItem("id0", null, "Flour", "sample description"));
-        list.add(new ShoppingItem("id1", null, "Soap", "sample description 2"));
-        list.add(new ShoppingItem("id2", null, "Eggs", "sample description 3"));
-        list.add(new ShoppingItem("id3", null, "Onions", "sample description 4"));
-        list.add(new ShoppingItem("id3", null, "Potatoes", "sample description 5"));
-        list.add(new ShoppingItem("id3", null, "Bacon", "sample description 6"));
-        list.add(new ShoppingItem("id3", null, "Tomato Sauce", "sample description 7"));
-        return list;
+        try {
+            Type listType = new TypeToken<ArrayList<ShoppingItem>>() {}.getType();
+            return new Gson().fromJson(assetsSingleton.getJsonDataFromAssets(),
+                    listType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
