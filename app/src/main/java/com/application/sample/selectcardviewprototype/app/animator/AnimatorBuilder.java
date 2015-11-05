@@ -1,4 +1,4 @@
-package com.application.sample.selectcardviewprototype.app.animation;
+package com.application.sample.selectcardviewprototype.app.animator;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -15,11 +15,9 @@ public class AnimatorBuilder {
 
     private static final String TOP = "top";
     private final int duration;
-    private String TRANSLATION_Y ="translationY";
+    private static final String TRANSLATION_Y ="translationY";
     private String ALPHA = "alpha";
     private String BOTTOM = "bottom";
-    private int oldViewHeight = 0;
-    private int oldViewTop = 0;
 
     public static AnimatorBuilder getInstance(WeakReference<Context> context) {
         return new AnimatorBuilder(context);
@@ -86,7 +84,7 @@ public class AnimatorBuilder {
      * @param expanding
      * @return
      */
-    public Animator getShowHideAnimator(View view, boolean expanding) {
+    public Animator getHideAnimator( View view, boolean expanding) {
         int start = expanding ? 1 : 0;
         int end = expanding ? 0 : 1;
         return buildAlphaAnimator(view, start, end);
@@ -95,27 +93,33 @@ public class AnimatorBuilder {
     /**
      *
      * @param view
-     * @param expanding
      * @param marginTop
+     * @param expanding
      * @return
      */
-    public Animator getTranslationAnimator(View view, int marginTop, boolean expanding) {
+    public Animator getTranslationAnimator( View view, int marginTop, boolean expanding) {
         int start = expanding ? 0 : -marginTop;
         int end = expanding ? -marginTop : 0;
-        return buildTranslationAnimator(view, start, end);
+        return  buildTranslationAnimator(view, start, end);
+
     }
 
     /**
      *
      * @param view
-     * @param expanding
+     * @param initialViewHeight
+     * @param marginTop
      * @param containerHeight
+     * @param expanding
      * @return
      */
-    public Animator getResizeBottomAnimator(View view, int containerHeight, boolean expanding) {
-        oldViewHeight = expanding ? view.getHeight() : oldViewHeight;
-        oldViewTop = expanding ? view.getTop() : oldViewTop;
-        int start = expanding ? containerHeight + oldViewTop : oldViewHeight + oldViewTop;
+    public Animator getResizeBottomAnimator(View view, int initialViewHeight, int marginTop,
+                                            int containerHeight, boolean expanding) {
+        int start = expanding ?
+                containerHeight + marginTop :
+                initialViewHeight + marginTop;
         return buildResizeBottomAnimator(view, start);
     }
+
+
 }

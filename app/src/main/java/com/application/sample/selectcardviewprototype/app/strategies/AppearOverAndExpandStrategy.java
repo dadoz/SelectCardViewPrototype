@@ -1,4 +1,4 @@
-package com.application.sample.selectcardviewprototype.app.strategies.behaviors;
+package com.application.sample.selectcardviewprototype.app.strategies;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
-import com.application.sample.selectcardviewprototype.app.animation.AnimatorBuilder;
-import com.application.sample.selectcardviewprototype.app.strategies.CardViewStrategyInterface;
+import com.application.sample.selectcardviewprototype.app.animator.AnimatorBuilder;
+import com.application.sample.selectcardviewprototype.app.cardviewAnimator.CardViewAnimatorStrategyInterface;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
@@ -26,25 +26,25 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
 /**
  * Created by davide on 14/09/15.
  */
-public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
+public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInterface {
     private final WeakReference<Activity> activity;
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
     private final FrameLayout frameLayout;
-    private int marginTop;
     private View selectedView;
     private AnimatorBuilder animatorBuilder;
     private boolean expanding = false;
+    private int initialHeight;
 
-    public AppearOverAndExpandBehavior(RecyclerView recyclerView,
+    public AppearOverAndExpandStrategy(RecyclerView recyclerView,
                                        WeakReference<Activity> activity,
                                        FrameLayout frameLayout) {
         this.activity = activity;
         this.recyclerView = recyclerView;
         this.frameLayout = frameLayout;
         this.status = StatusSingleton.getInstance();
-        this.animatorBuilder = new AnimatorBuilder(new WeakReference<Context>(activity.
-                get().getApplicationContext()));
+        this.animatorBuilder = new AnimatorBuilder(new WeakReference<Context>(activity.get()
+                .getApplicationContext()));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
         expanding = true;
         status.setStatus(SELECTED);
         selectedView = recyclerView.getLayoutManager().findViewByPosition(position);
-        marginTop = getMarginTop();
+        initialHeight = selectedView.getHeight();
         ShoppingItem selectedItem = getSelectedItem(position);
         View cardView = initOverLayout(selectedItem);
         initAnimator(cardView, expanding);
@@ -67,23 +67,65 @@ public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
     }
 
     /**
-     * TODO refactor ??
      * @param view
      * @param expanding
      */
     public void initAnimator(final View view, final boolean expanding) {
         AnimatorSet animatorSet = new AnimatorSet();
+        AnimatorSet animatorSet1 = new AnimatorSet();
+
+        showOverLayout(true);
+        //INIT and global
         Animator translationAnimator = animatorBuilder.getTranslationAnimator(view,
                 getMarginTop(), expanding);
+        Animator bottomAnimator = animatorBuilder.getResizeBottomAnimator(view, initialHeight,
+                getMarginTop(), recyclerView.getHeight(), expanding);
+        Animator alphaAnimator = animatorBuilder.getHideAnimator(recyclerView, expanding);
+
+        //changes
+        buildAnimatorSet(expanding, animatorSet, animatorSet1,
+                translationAnimator, bottomAnimator, alphaAnimator);
+        animatorSet1.start();
+    }
+
+    /**
+     *
+     * @param expanding
+     * @param animatorSet
+     * @param animatorSet1
+     * @param translationAnimator
+     * @param bottomAnimator
+     * @param alphaAnimator
+     */
+    private void buildAnimatorSet(boolean expanding, AnimatorSet animatorSet,
+                                  AnimatorSet animatorSet1, Animator translationAnimator,
+                                  Animator bottomAnimator, Animator alphaAnimator) {
         if (expanding) {
-            Animator alphaAnimator = animatorBuilder.getShowHideAnimator(recyclerView, true);
             animatorSet.playTogether(alphaAnimator, translationAnimator);
-        } else {
-            animatorSet.play(translationAnimator);
+            animatorSet1.play(animatorSet).before(bottomAnimator);
+            return;
         }
-        animatorSet.addListener(new InitialCardviewAnimatorListener(view, frameLayout, recyclerView,
-                animatorBuilder, expanding));
-        animatorSet.start();
+        alphaAnimator.setStartDelay(400);
+        animatorSet.play(translationAnimator);
+        animatorSet1.play(animatorSet).before(bottomAnimator).before(alphaAnimator);
+        animatorSet1.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                showOverLayout(false);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
     }
 
     /**
@@ -93,7 +135,7 @@ public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
     private View initOverLayout(ShoppingItem selectedItem) {
         frameLayout.setBackgroundColor(Color.TRANSPARENT);
         View cardView = inflateCardView();
-        initCardView(cardView, selectedItem, marginTop);
+        initCardView(cardView, selectedItem, getMarginTop());
         return cardView;
     }
 
@@ -174,106 +216,15 @@ public class AppearOverAndExpandBehavior implements CardViewStrategyInterface {
         return rvY;
     }
 
-    static class InitialCardviewAnimatorListener implements Animator.AnimatorListener {
-
-        private final boolean expanding;
-        private final int containerHeight;
-        private final AnimatorBuilder animatorBuilder;
-        private final View view;
-        private final FrameLayout frameLayout;
-        private final View containerView;
-
-        public InitialCardviewAnimatorListener(View view, FrameLayout frameLayout, View containerView,
-                                               AnimatorBuilder animatorBuilder, boolean expanding) {
-            this.view = view;
-            this.frameLayout = frameLayout;
-            this.animatorBuilder = animatorBuilder;
-            this.containerHeight = containerView.getHeight();
-            this.containerView = containerView;
-            this.expanding = expanding;
+    /**
+     *
+     * @param isShowing
+     */
+    private void showOverLayout(boolean isShowing) {
+        frameLayout.setVisibility(isShowing ? View.VISIBLE : View.GONE);
+        if (!isShowing) {
+            frameLayout.removeAllViews();
         }
-
-        @Override
-        public void onAnimationStart(Animator animation) {
-            if (expanding) {
-                showOverLayout(true);
-            }
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-            Animator bottomAnimator = animatorBuilder
-                    .getResizeBottomAnimator(view, containerHeight, expanding);
-            bottomAnimator.start();
-            bottomAnimator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    if (!expanding) {
-                        Animator showHideAnimator = animatorBuilder
-                                .getShowHideAnimator(containerView, false);
-                        showHideAnimator.start();
-                        showHideAnimator.addListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                showOverLayout(false);
-                            }
-
-                            @Override
-                            public void onAnimationCancel(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator animation) {
-
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-
-        }
-
-        /**
-         *
-         * @param isShowing
-         */
-        private void showOverLayout(boolean isShowing) {
-            frameLayout.setVisibility(isShowing ? View.VISIBLE : View.GONE);
-            if (!isShowing) {
-                frameLayout.removeAllViews();
-            }
-        }
-
     }
 
 }

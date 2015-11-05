@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 
 import butterknife.Bind;
@@ -18,19 +15,17 @@ import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
 import com.application.sample.selectcardviewprototype.app.singleton.RetrieveAssetsSingleton;
-import com.application.sample.selectcardviewprototype.app.strategies.CardViewStrategy;
-import com.application.sample.selectcardviewprototype.app.strategies.behaviors.AppearOverAndExpandBehavior;
+import com.application.sample.selectcardviewprototype.app.cardviewAnimator.CardViewAnimator;
+import com.application.sample.selectcardviewprototype.app.strategies.AppearOverAndExpandStrategy;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
@@ -45,7 +40,7 @@ public class ShoppingListFragment extends Fragment
     @Bind(R.id.overlayViewId)
     FrameLayout mOverlayView;
 
-    private CardViewStrategy cardBehavior;
+    private CardViewAnimator cardBehavior;
     private StatusSingleton mStatus;
     private RetrieveAssetsSingleton assetsSingleton;
 
@@ -96,8 +91,8 @@ public class ShoppingListFragment extends Fragment
      * @param isToggling
      */
     private void setCardviewBehavior(boolean isToggling) {
-        cardBehavior = CardViewStrategy.getInstance();
-        cardBehavior.setStrategy(new AppearOverAndExpandBehavior(mRecyclerView,
+        cardBehavior = CardViewAnimator.getInstance();
+        cardBehavior.setStrategy(new AppearOverAndExpandStrategy(mRecyclerView,
                 new WeakReference<Activity>(getActivity()), mOverlayView));
     }
 
