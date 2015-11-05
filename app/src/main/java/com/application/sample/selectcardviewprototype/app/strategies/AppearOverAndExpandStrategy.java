@@ -27,6 +27,7 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
  * Created by davide on 14/09/15.
  */
 public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInterface {
+    private static final long MIN_DELAY = 400;
     private final WeakReference<Activity> activity;
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
@@ -105,7 +106,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
             animatorSet1.play(animatorSet).before(bottomAnimator);
             return;
         }
-        alphaAnimator.setStartDelay(400);
+        alphaAnimator.setStartDelay(MIN_DELAY);
         animatorSet.play(translationAnimator);
         animatorSet1.play(animatorSet).before(bottomAnimator).before(alphaAnimator);
         animatorSet1.addListener(new Animator.AnimatorListener() {

@@ -60,11 +60,11 @@ public class ShoppingListFragment extends Fragment
     }
 
     /**
-     *
+     * init cardview
      */
     public void onInitView() {
         initRecyclerView(getData());
-        setCardviewBehavior();
+        setCardViewAnimator();
     }
 
     /**
@@ -79,18 +79,11 @@ public class ShoppingListFragment extends Fragment
         mRecyclerView.setAdapter(adapter);
     }
 
-    /**
-     *
-     */
-    private void setCardviewBehavior() {
-        setCardviewBehavior(false);
-    }
 
     /**
      *
-     * @param isToggling
      */
-    private void setCardviewBehavior(boolean isToggling) {
+    private void setCardViewAnimator() {
         cardBehavior = CardViewAnimator.getInstance();
         cardBehavior.setStrategy(new AppearOverAndExpandStrategy(mRecyclerView,
                 new WeakReference<Activity>(getActivity()), mOverlayView));

@@ -1,12 +1,9 @@
 package com.application.sample.selectcardviewprototype.app.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
@@ -27,7 +24,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     public RecyclerviewAdapter(ArrayList<ShoppingItem> list,
                                WeakReference<OnItemSelectedListenerCustom> listener) {
 
-        shoppingItemList = list;
+        this.shoppingItemList = list;
         this.listener = listener;
     }
 
@@ -54,25 +51,28 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     /**
-     *
+     * View Holder
      */
     public static class ShoppingItemViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private final TextView descriptionTextView;
+        private TextView descriptionTextView;
         private TextView textView;
         private final WeakReference<OnItemSelectedListenerCustom> listener;
         private int currentPosition;
 
         public ShoppingItemViewHolder(View view, WeakReference<OnItemSelectedListenerCustom> listener) {
             super(view);
-//            this.imageView = (ImageView) view.findViewById(R.id.thumbnailImageViewId);
             this.textView = (TextView) view.findViewById(R.id.nameTextViewId);
             this.descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextViewId);
-
             this.listener = listener;
         }
 
+        /**
+         *
+         * @param item
+         * @param currentPosition
+         */
         public void bindTo(ShoppingItem item, int currentPosition) {
             this.currentPosition = currentPosition;
             textView.setText(item.getName());
@@ -88,27 +88,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     /**
-     *
-     * @param pos
+     * interface to handle onItemClicked
      */
-    public void leaveSelectedItem(int pos) {
-        ShoppingItem itemTemp = shoppingItemList.get(pos);
-        shoppingItemList.clear();
-        shoppingItemList.add(itemTemp);
-        notifyDataSetChanged();
-    }
-
-    /**
-     *
-     * @param items
-     */
-    public void addAllItem(ArrayList<ShoppingItem> items) {
-        shoppingItemList.clear();
-        notifyDataSetChanged();
-        shoppingItemList.addAll(items);
-        notifyItemRangeInserted(0, items.size());
-    }
-
     public interface OnItemSelectedListenerCustom {
         void onItemClicked(int selectedPosition);
     }

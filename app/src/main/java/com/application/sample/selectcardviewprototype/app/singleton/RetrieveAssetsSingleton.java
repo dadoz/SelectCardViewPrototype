@@ -16,6 +16,11 @@ public class RetrieveAssetsSingleton {
     private final AssetManager assetManager;
     private static RetrieveAssetsSingleton singletonRef;
 
+    /**
+     *
+     * @param activity
+     * @return
+     */
     public static RetrieveAssetsSingleton getInstance(WeakReference<Activity> activity) {
         return singletonRef == null ?
                 singletonRef = new RetrieveAssetsSingleton(activity) :

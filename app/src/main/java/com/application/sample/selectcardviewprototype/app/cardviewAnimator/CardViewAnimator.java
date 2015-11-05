@@ -7,8 +7,6 @@ public class CardViewAnimator {
     public static CardViewAnimator cardViewStrategyRef;
     private CardViewAnimatorStrategyInterface strategyRef;
 
-    public enum CardviewAnimatorStrategyEnum { SELECT_AND_DISAPPEAR, APPEAR_OVER, EXPAND_IN_LIST }
-
     public static CardViewAnimator getInstance() {
         return cardViewStrategyRef == null ?
                 cardViewStrategyRef = new CardViewAnimator() :
@@ -18,12 +16,16 @@ public class CardViewAnimator {
     private CardViewAnimator() {
     }
 
+    /**
+     *
+     * @param ref
+     */
     public void setStrategy(CardViewAnimatorStrategyInterface ref) {
         strategyRef = ref;
     }
 
     /**
-     *
+     * expand animation
      * @param position
      */
     public void expand(int position) {
@@ -31,7 +33,7 @@ public class CardViewAnimator {
     }
 
     /**
-     *
+     * collapse animation
      */
     public void collapse() {
         strategyRef.collapse();

@@ -14,24 +14,19 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = "Main";
-    private StatusSingleton mStatus;
+    private StatusSingleton status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mStatus = getInstance();
-
+        status = getInstance();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new ShoppingListFragment())
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,27 +36,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return (item.getItemId() == R.id.action_settings) ||
+                super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if (mStatus.getStatus() == SELECTED) {
+        if (status.getStatus() == SELECTED) {
             getFragment().onRestoreRecyclerView();
-            mStatus.setStatus(NOT_SET);
+            status.setStatus(NOT_SET);
             return;
         }
         getFragment().destroyBehavior();
         super.onBackPressed();
     }
 
+    /**
+     * get fragment
+     * @return
+     */
     private OnRestoreRecyclerViewInterface getFragment() {
         int size = getSupportFragmentManager().getFragments().size();
         return ((OnRestoreRecyclerViewInterface) getSupportFragmentManager()
