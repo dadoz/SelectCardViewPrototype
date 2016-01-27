@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:alpha="0"
+    android:id="@+id/emailLayoutId"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/medium_padding">
+    <ImageView
+        android:id="@+id/emailImageId"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_email_black_48dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_padding"
+        android:layout_marginLeft="@dimen/medium_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/emailTextId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textColor="@color/material_pink400"
+            android:text="da-lo@htomail.com"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:textColor="@color/material_bluegrey200"
+
+            android:textStyle="italic"
+            android:text="home email"/>
+
+    </LinearLayout>
+</LinearLayout>

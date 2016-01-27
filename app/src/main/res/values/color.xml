@@ -262,7 +262,7 @@
     <color name="material_grey800">#ff424242</color>
     <color name="material_grey900">#ff212121</color>
 
-    <color name="material_bluegrey50">#ffeceff1</color>
+    <color name="material_bluebluegrey50">#ffeceff1</color>
     <color name="material_bluegrey100">#ffcfd8dc</color>
     <color name="material_bluegrey200">#ffb0bec5</color>
     <color name="material_bluegrey300">#ff90a4ae</color>

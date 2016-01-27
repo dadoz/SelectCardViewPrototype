@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:alpha="0"
+    android:id="@+id/positionLayoutId"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/medium_padding">
+    <ImageView
+        android:id="@+id/positionImageId"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_room_black_48dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_padding"
+        android:layout_marginLeft="@dimen/medium_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/positionTextId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textColor="@color/material_bluegrey600"
+            android:text="Boulevard route - 10"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:textColor="@color/material_bluegrey200"
+
+            android:textStyle="italic"
+            android:text="main address"/>
+
+    </LinearLayout>
+</LinearLayout>

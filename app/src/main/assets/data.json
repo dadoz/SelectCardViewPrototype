@@ -2,43 +2,64 @@
   {
     "id": 0,
     "thumbnail": null,
-    "name": "Flour",
-    "description": "sample description 7"
+    "name": "Denise",
+    "description": "call info",
+    "phone": "333 - 809090",
+    "email": "denise@fake-mail.com",
+    "position": "Rue Charles de Gaule - Paris"
   },
   {
     "id": 1,
     "thumbnail": null,
-    "name": "Soap",
-    "description": "sample description 7"
+    "name": "Oukka",
+    "description": "call info",
+    "phone": "222 - 809091",
+    "email": "oukka@fake-mail.com",
+    "position": "Filippenkatu - Finland"
   },
   {
     "id": 2,
     "thumbnail": null,
-    "name": "Eggs",
-    "description": "sample description 7"
+    "name": "Math",
+    "description": "call info",
+    "phone": "111 - 809093",
+    "email": null,
+    "position": "Main Street - NY"
   },
   {
     "id": 3,
     "thumbnail": null,
-    "name": "Onions",
-    "description": "sample description 7"
+    "name": "Viky",
+    "description": "call info",
+    "phone": null,
+    "email": "viky@fake-mail.com",
+    "position": "Rue Calligan - Germanny"
   },
   {
     "id": 4,
     "thumbnail": null,
-    "name": "Potatoes",
-    "description": "sample description 7"
+    "name": "Andrey",
+    "description": "call info",
+    "phone": "444 - 809092",
+    "email": "andrey@fake-mail.com",
+    "position": null
   },
   {
     "id": 5,
     "thumbnail": null,
-    "name": "Bacon",
-    "description": "sample description 7"
+    "name": "Annette",
+    "description": "call info",
+    "phone": null,
+    "email": "annette@fake-mail.com",
+    "position": "Rue du Pain - Bruxelles"
   },
   {
     "id": 6,
     "thumbnail": null,
-    "name": "Tomato Sauce",
-    "description": "sample description 7"
+    "name": "Boris",
+    "description": "call info",
+    "phone": null,
+    "email": "boris@fake-mail.com",
+    "position": null
   }
 ]

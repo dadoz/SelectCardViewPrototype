@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 /**
  * Created by davide on 04/09/15.
  */
-public class ShoppingItem {
+public class ContactItem {
+    private final String position;
+    private final String phone;
+    private final String email;
     private String id;
     private Bitmap thumbnail;
     private String name;
@@ -18,11 +21,15 @@ public class ShoppingItem {
      * @param name
      * @param description
      */
-    public ShoppingItem(String id, Bitmap thumbnail, String name, String description) {
+    public ContactItem(String id, Bitmap thumbnail, String name, String description, String phone,
+                       String email, String position) {
         this.id = id;
         this.thumbnail = thumbnail;
         this.name = name;
         this.description = description;
+        this.phone = phone;
+        this.email = email;
+        this.position = position;
     }
 
     /**
@@ -63,5 +70,29 @@ public class ShoppingItem {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getPosition() {
+        return position;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getEmail() {
+        return email;
     }
 }

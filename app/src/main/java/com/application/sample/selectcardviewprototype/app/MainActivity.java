@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         status = getInstance();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager()
+                    .beginTransaction()
                     .add(R.id.container, new ShoppingListFragment())
                     .commit();
         }
@@ -30,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return (item.getItemId() == R.id.action_settings) ||
-                super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -47,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
             status.setStatus(NOT_SET);
             return;
         }
-        getFragment().destroyBehavior();
+
+        if (getFragment() != null) {
+            getFragment().destroyBehavior();
+        }
         super.onBackPressed();
     }
 

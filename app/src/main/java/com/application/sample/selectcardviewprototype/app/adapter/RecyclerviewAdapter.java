@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.application.sample.selectcardviewprototype.app.R;
-import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
+import com.application.sample.selectcardviewprototype.app.model.ContactItem;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ import java.util.List;
  */
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ShoppingItemViewHolder> {
-    private final List<ShoppingItem> shoppingItemList;
+    private final List<ContactItem> shoppingItemList;
     private final WeakReference<OnItemSelectedListenerCustom> listener;
 
 
-    public RecyclerviewAdapter(ArrayList<ShoppingItem> list,
+    public RecyclerviewAdapter(ArrayList<ContactItem> list,
                                WeakReference<OnItemSelectedListenerCustom> listener) {
 
         this.shoppingItemList = list;
@@ -46,7 +46,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         return (null != shoppingItemList ? shoppingItemList.size() : 0);
     }
 
-    public List<ShoppingItem> getAllItems() {
+    public List<ContactItem> getAllItems() {
         return shoppingItemList;
     }
 
@@ -56,14 +56,14 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     public static class ShoppingItemViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
+        private final TextView nameTextView;
         private TextView descriptionTextView;
-        private TextView textView;
         private final WeakReference<OnItemSelectedListenerCustom> listener;
         private int currentPosition;
 
         public ShoppingItemViewHolder(View view, WeakReference<OnItemSelectedListenerCustom> listener) {
             super(view);
-            this.textView = (TextView) view.findViewById(R.id.nameTextViewId);
+            this.nameTextView = (TextView) view.findViewById(R.id.nameTextViewId);
             this.descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextViewId);
             this.listener = listener;
         }
@@ -73,9 +73,9 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
          * @param item
          * @param currentPosition
          */
-        public void bindTo(ShoppingItem item, int currentPosition) {
+        public void bindTo(ContactItem item, int currentPosition) {
             this.currentPosition = currentPosition;
-            textView.setText(item.getName());
+            nameTextView.setText(item.getName());
             descriptionTextView.setText(item.getDescription());
         }
 

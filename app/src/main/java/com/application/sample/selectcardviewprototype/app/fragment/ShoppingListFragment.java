@@ -3,9 +3,13 @@ package com.application.sample.selectcardviewprototype.app.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -17,7 +21,7 @@ import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAd
 import com.application.sample.selectcardviewprototype.app.singleton.RetrieveAssetsSingleton;
 import com.application.sample.selectcardviewprototype.app.cardviewAnimator.CardViewAnimator;
 import com.application.sample.selectcardviewprototype.app.strategies.AppearOverAndExpandStrategy;
-import com.application.sample.selectcardviewprototype.app.model.ShoppingItem;
+import com.application.sample.selectcardviewprototype.app.model.ContactItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,8 +30,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
 
 /**
@@ -63,22 +65,43 @@ public class ShoppingListFragment extends Fragment
      * init cardview
      */
     public void onInitView() {
+        setHasOptionsMenu(true);
+        setActionbarTitle();
         initRecyclerView(getData());
         setCardViewAnimator();
     }
 
     /**
      *
+     */
+    private void setActionbarTitle() {
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar()
+                    .setTitle(R.string.app_name);
+            ((AppCompatActivity) getActivity()).getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
+     *
      * @param shoppingItems
      */
-    private void initRecyclerView(ArrayList<ShoppingItem> shoppingItems) {
+    private void initRecyclerView(ArrayList<ContactItem> shoppingItems) {
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(shoppingItems,
                 new WeakReference<RecyclerviewAdapter.OnItemSelectedListenerCustom>(this));
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(lm);
         mRecyclerView.setAdapter(adapter);
     }
-
 
     /**
      *
@@ -93,9 +116,9 @@ public class ShoppingListFragment extends Fragment
      *
      * @return
      */
-    public ArrayList<ShoppingItem> getData() {
+    public ArrayList<ContactItem> getData() {
         try {
-            Type listType = new TypeToken<ArrayList<ShoppingItem>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<ContactItem>>() {}.getType();
             return new Gson().fromJson(assetsSingleton.getJsonDataFromAssets(),
                     listType);
         } catch (IOException e) {
@@ -115,8 +138,40 @@ public class ShoppingListFragment extends Fragment
 
     @Override
     public void onItemClicked(int selectedPosition) {
-        if (mStatus.getStatus() != SELECTED) {
+        if (!mStatus.isSelected()) {
+            mStatus.setPosition(selectedPosition);
             cardBehavior.expand(selectedPosition);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                ((AppCompatActivity) getActivity()).getSupportActionBar()
+                        .setDisplayHomeAsUpEnabled(true);
+                changeFragment(new SettingsFragment());
+                return true;
+            case android.R.id.home:
+                if (mStatus.isSelected()) {
+                    cardBehavior.collapse();
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     *
+     * @param frag
+     */
+    private void changeFragment(Fragment frag) {
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, frag)
+                .addToBackStack("Settings")
+                .commit();
+    }
+
 }
