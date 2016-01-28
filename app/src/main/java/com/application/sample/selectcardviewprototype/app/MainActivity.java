@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.application.sample.selectcardviewprototype.app.fragment.OnRestoreRecyclerViewInterface;
-import com.application.sample.selectcardviewprototype.app.fragment.ShoppingListFragment;
+import com.application.sample.selectcardviewprototype.app.fragment.ContactListFragment;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.*;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new ShoppingListFragment())
+                    .add(R.id.container, new ContactListFragment())
                     .commit();
         }
     }
@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     private OnRestoreRecyclerViewInterface getFragment() {
-        int size = getSupportFragmentManager().getFragments().size();
+        final int CONTACT_LIST_FRAGMENT_ID = 0;
         return ((OnRestoreRecyclerViewInterface) getSupportFragmentManager()
-                .getFragments().get(size - 1));
+                .getFragments().get(CONTACT_LIST_FRAGMENT_ID));
     }
 
 }

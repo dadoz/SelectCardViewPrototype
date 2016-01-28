@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
@@ -49,8 +50,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     private AnimatorSet animatorSet1;
     private Animator bottomAnimatorContent;
     private AnimatorSet animatorSet2;
-    private Object cardviewDescriptionView;
-    private Object cardviewContentAnimatorArray;
 
     public AppearOverAndExpandStrategy(RecyclerView recyclerView,
                                        WeakReference<Activity> activity,
@@ -219,6 +218,15 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         ((TextView) view.findViewById(R.id.descriptionTextViewId))
                 .setText(selectedItem.getDescription());
         //update description view
+        initDescriptionView(view, selectedItem);
+    }
+
+    /**
+     *
+     * @param view
+     * @param selectedItem
+     */
+    private void initDescriptionView(View view, ContactItem selectedItem) {
         setPhoneView((TextView) view.findViewById(R.id.phoneTextId),
                 selectedItem.getPhone());
         setEmailView((TextView) view.findViewById(R.id.emailTextId),
@@ -226,7 +234,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         setPositionView((TextView) view.findViewById(R.id.positionTextId),
                 selectedItem.getPosition());
     }
-
     /**
      *
      * @param view

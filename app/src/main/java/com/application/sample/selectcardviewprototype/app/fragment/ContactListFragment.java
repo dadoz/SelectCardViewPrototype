@@ -35,7 +35,7 @@ import java.util.ArrayList;
 /**
      * A placeholder fragment containing a simple view.
      */
-public class ShoppingListFragment extends Fragment
+public class ContactListFragment extends Fragment
         implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom {
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
@@ -47,7 +47,7 @@ public class ShoppingListFragment extends Fragment
     private RetrieveAssetsSingleton assetsSingleton;
 
 
-    public ShoppingListFragment() {
+    public ContactListFragment() {
     }
 
     @Override
