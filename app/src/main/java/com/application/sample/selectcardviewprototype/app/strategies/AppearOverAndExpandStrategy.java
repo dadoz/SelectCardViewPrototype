@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
@@ -25,7 +23,6 @@ import com.application.sample.selectcardviewprototype.app.singleton.StatusSingle
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.NOT_SET;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
@@ -198,7 +195,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      * @return
      */
     private View inflateCardView() {
-        View view = activity.get().getLayoutInflater().inflate(R.layout.shopping_item_row,
+        View view = activity.get().getLayoutInflater().inflate(R.layout.contact_item_row,
                 frameLayout);
         updateContentDescription(view);
         return view.findViewById(R.id.mainViewId);

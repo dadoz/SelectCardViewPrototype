@@ -30,7 +30,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public ShoppingItemViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_item_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item_row, parent, false);
         ShoppingItemViewHolder vh = new ShoppingItemViewHolder(view, listener);
         view.setOnClickListener(vh);
         return vh;
