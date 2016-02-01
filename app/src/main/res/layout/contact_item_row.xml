@@ -5,14 +5,14 @@
     android:clickable="true"
     android:id="@+id/mainViewId"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/min_cardview_height"
     android:layout_marginBottom="@dimen/medium_padding"
     card_view:cardBackgroundColor="@color/material_white"
     android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
         android:id="@+id/mainContentViewId"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/min_cardview_height"
+        android:layout_height="wrap_content"
         android:padding="@dimen/medium_padding">
 
         <ImageView
@@ -56,10 +56,12 @@
             android:text="this is my content text - u should fill it with sm fake description like the one u're imagine right now."/>
 
         <LinearLayout
+            android:id="@+id/descriptionContentViewId"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toRightOf="@id/thumbnailImageViewId"
+            android:layout_marginLeft="@dimen/medium_padding"
             android:layout_below="@id/descriptionTextViewId"
             android:layout_marginTop="@dimen/medium_padding">
             <include layout="@layout/phone_layout"/>

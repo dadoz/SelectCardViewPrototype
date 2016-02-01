@@ -386,10 +386,10 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     }
 
     /**
-     *
+     * description or content animator
      * @return
      */
-    public Animator[] getCardviewContentAnimatorArray() {
+    public ArrayList<Animator> getCardviewContentAnimatorArray() {
         View[] viewArray = getCardviewDescriptionViewArray();
         ArrayList<Animator> alphaAnimatorArrayList = new ArrayList<Animator>();
         for (int i = 0; i < viewArray.length; i++) {
@@ -398,8 +398,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
             }
         }
 
-        Animator[] array = new Animator[alphaAnimatorArrayList.size()];
-        alphaAnimatorArrayList.toArray(array);
-        return array;
+        return alphaAnimatorArrayList;
     }
 }
