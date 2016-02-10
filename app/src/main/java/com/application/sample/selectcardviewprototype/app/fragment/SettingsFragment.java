@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.application.sample.selectcardviewprototype.app.BuildConfig;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.model.Setting;
 
@@ -52,7 +53,7 @@ public class SettingsFragment extends Fragment
         ArrayList<Setting> settingList = new ArrayList<Setting>();
         settingList.add(new Setting("Author", res.getString(R.string.author)));
         settingList.add(new Setting("Contacts", res.getString(R.string.contact_email)));
-        settingList.add(new Setting("Build version", res.getString(R.string.build_version)));
+        settingList.add(new Setting("Build version", BuildConfig.VERSION_NAME));
         settingsListView.setAdapter(new SettingsAdapter(getActivity().getApplicationContext(),
                 R.layout.setting_item, settingList));
     }
