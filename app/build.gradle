@@ -20,8 +20,8 @@ android {
         applicationId "com.application.sample.selectcardviewprototype.app"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 3
+        versionName "1.0.3"
     }
 
     compileOptions {
@@ -59,4 +59,5 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.flurry.android:analytics:6.2.0'
 }
