@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/material_indigo600</item>
         <item name="colorPrimary">@color/material_indigo400</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
+        <item name="elevation">0dp</item>
     </style>
 
     <style name="ThemeOverlay.AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

@@ -6,7 +6,7 @@
     android:id="@+id/mainViewId"
     android:layout_width="match_parent"
     android:layout_height="@dimen/min_cardview_height"
-    android:layout_marginBottom="@dimen/medium_padding"
+    android:layout_margin="@dimen/medium_padding"
     card_view:cardBackgroundColor="@color/material_white"
     android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/thumbnailImageViewId"
-            android:layout_marginTop="@dimen/small_padding"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_width="@dimen/icon_medium_size"
             android:layout_height="@dimen/icon_medium_size"
             android:src="@drawable/ic_person_pin_circle_black_48dp"/>
@@ -26,34 +26,12 @@
             android:id="@+id/nameTextViewId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/thumbnailImageViewId"
             android:layout_marginLeft="@dimen/medium_padding"
             android:textSize="@dimen/abc_text_size_headline_material"
             android:textColor="@color/material_indigo800"
             android:text="sample"/>
-        <ImageView
-            android:id="@+id/descriptionImageViewId"
-            android:layout_below="@id/nameTextViewId"
-            android:layout_toRightOf="@id/thumbnailImageViewId"
-            android:layout_marginLeft="@dimen/medium_padding"
-            android:layout_marginTop="4dp"
-
-            android:layout_width="@dimen/icon_small_size"
-            android:layout_height="@dimen/icon_small_size"
-            android:src="@drawable/ic_query_builder_black_48dp"/>
-        <TextView
-            android:id="@+id/descriptionTextViewId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/nameTextViewId"
-            android:layout_marginLeft="@dimen/small_padding"
-            android:layout_toRightOf="@id/descriptionImageViewId"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            android:textColor="@color/material_bluegrey400"
-            android:maxLines="1"
-            android:textStyle="italic"
-            android:text="this is my content text - u should fill it with sm fake description like the one u're imagine right now."/>
 
         <LinearLayout
             android:id="@+id/descriptionContentViewId"
@@ -62,8 +40,8 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/thumbnailImageViewId"
             android:layout_marginLeft="@dimen/medium_padding"
-            android:layout_below="@id/descriptionTextViewId"
-            android:layout_marginTop="@dimen/medium_padding">
+            android:layout_below="@id/nameTextViewId"
+            android:layout_marginTop="30dp">
             <include layout="@layout/phone_layout"/>
             <include layout="@layout/email_layout"/>
             <include layout="@layout/position_layout"/>

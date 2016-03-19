@@ -57,14 +57,14 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             implements View.OnClickListener {
 
         private final TextView nameTextView;
-        private TextView descriptionTextView;
+//        private TextView descriptionTextView;
         private final WeakReference<OnItemSelectedListenerCustom> listener;
         private int currentPosition;
 
         public ShoppingItemViewHolder(View view, WeakReference<OnItemSelectedListenerCustom> listener) {
             super(view);
             this.nameTextView = (TextView) view.findViewById(R.id.nameTextViewId);
-            this.descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextViewId);
+//            this.descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextViewId);
             this.listener = listener;
         }
 
@@ -76,7 +76,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         public void bindTo(ContactItem item, int currentPosition) {
             this.currentPosition = currentPosition;
             nameTextView.setText(item.getName());
-            descriptionTextView.setText(item.getDescription());
+//            descriptionTextView.setText(item.getDescription());
         }
 
         @Override

@@ -1,7 +1,9 @@
 package com.application.sample.selectcardviewprototype.app.animator;
 
 import android.animation.Animator;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -67,6 +69,18 @@ public class AnimatorBuilder {
 
     /**
      *
+     * @param colorFrom
+     * @param colorTo
+     * @return
+     */
+    private ValueAnimator buildColorTransitionAnimator(@NonNull int colorFrom, @NonNull int colorTo) {
+        ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        animator.setDuration(duration);
+        return animator;
+    }
+
+    /**
+     *
      * @param view
      * @param endAlpha
      * @param startAlpha
@@ -88,6 +102,18 @@ public class AnimatorBuilder {
         int start = expanding ? 1 : 0;
         int end = expanding ? 0 : 1;
         return buildAlphaAnimator(view, start, end);
+    }
+    /**
+     *
+     * @param colorFrom
+     * @param colorTo
+     * @param expanding
+     * @return
+     */
+    public ValueAnimator getColorTransitionAnimator(int colorFrom, int colorTo, boolean expanding) {
+        return expanding ?
+                buildColorTransitionAnimator(colorFrom, colorTo) :
+                buildColorTransitionAnimator(colorTo, colorFrom);
     }
 
     /**

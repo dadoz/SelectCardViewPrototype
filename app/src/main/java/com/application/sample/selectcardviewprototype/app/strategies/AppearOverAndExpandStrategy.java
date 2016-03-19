@@ -2,10 +2,13 @@ package com.application.sample.selectcardviewprototype.app.strategies;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +35,7 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
  */
 public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInterface {
     private static final long MIN_DELAY = 400;
+    private static final int CUSTOM_MARGIN_BOTTOM = 600;
     private final WeakReference<Activity> activity;
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
@@ -47,6 +51,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     private AnimatorSet animatorSet1;
     private Animator bottomAnimatorContent;
     private AnimatorSet animatorSet2;
+    private ValueAnimator alphaFramelayoutAnimator;
 
     public AppearOverAndExpandStrategy(RecyclerView recyclerView,
                                        WeakReference<Activity> activity,
@@ -91,11 +96,13 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         translationAnimator = animatorBuilder.getTranslationAnimator(view,
                 getMarginTop(), expanding);
         bottomAnimator = animatorBuilder.getResizeBottomAnimator(view, initialHeight,
-                getMarginTop(), recyclerView.getHeight(), expanding);
+                getMarginTop(), recyclerView.getHeight() - CUSTOM_MARGIN_BOTTOM, expanding);
         bottomAnimatorContent = animatorBuilder
                 .getResizeBottomAnimator(view.findViewById(R.id.mainContentViewId), initialHeight,
                         getMarginTop(), recyclerView.getHeight(), expanding);
         alphaAnimator = animatorBuilder.getHideAnimator(recyclerView, expanding);
+        alphaFramelayoutAnimator = animatorBuilder.getColorTransitionAnimator(getColorFrom(),
+                getColorTo(), expanding);
 
         buildAnimatorSet(expanding);
         animatorSet1.start();
@@ -115,7 +122,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     public boolean onExpanding() {
         animatorSet.playTogether(alphaAnimator, translationAnimator);
         animatorSet2.playTogether(bottomAnimator, bottomAnimatorContent);
-        animatorSet1.play(animatorSet).before(animatorSet2);
+        animatorSet1.play(animatorSet).before(animatorSet2).before(alphaFramelayoutAnimator);
         animatorSet1.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -135,6 +142,13 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
             @Override
             public void onAnimationRepeat(Animator animation) {
 
+            }
+        });
+        alphaFramelayoutAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer color = (Integer) animation.getAnimatedValue();
+                frameLayout.setBackgroundColor(color);
             }
         });
         return true;
@@ -157,7 +171,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     public boolean onCollapsing() {
         alphaAnimator.setStartDelay(MIN_DELAY);
         animatorSet.play(translationAnimator);
-        animatorSet1.play(animatorSet).before(bottomAnimator).before(alphaAnimator);
+        animatorSet1.play(animatorSet).before(bottomAnimator).before(alphaAnimator).before(alphaFramelayoutAnimator);
         animatorSet1.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -177,6 +191,13 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
             public void onAnimationRepeat(Animator animation) {
             }
         });
+        alphaFramelayoutAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer color = (Integer) animation.getAnimatedValue();
+                frameLayout.setBackgroundColor(color);
+            }
+        });
         return true;
     }
     /**
@@ -184,7 +205,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      * @param selectedItem
      */
     private View initOverLayout(ContactItem selectedItem) {
-        frameLayout.setBackgroundColor(Color.TRANSPARENT);
         View cardView = inflateCardView();
         initCardView(cardView, selectedItem, getMarginTop());
         return cardView;
@@ -212,8 +232,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         view.setLayoutParams(lp);
         ((TextView) view.findViewById(R.id.nameTextViewId))
                 .setText(selectedItem.getName());
-        ((TextView) view.findViewById(R.id.descriptionTextViewId))
-                .setText(selectedItem.getDescription());
         //update description view
         initDescriptionView(view, selectedItem);
     }
@@ -362,14 +380,15 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
 
     /**
      * set actionBar
-     * @param visible
+     * @param isExpanding
      */
-    private void setActionBar(boolean visible) {
-        try {
-            ((AppCompatActivity) activity.get())
-                    .getSupportActionBar().setDisplayHomeAsUpEnabled(visible);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void setActionBar(boolean isExpanding) {
+        ActionBar actionBar = ((AppCompatActivity) activity.get())
+                .getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(isExpanding);
+            actionBar.setElevation(isExpanding ? 0 : 20);
+            actionBar.setDisplayShowTitleEnabled(!isExpanding);
         }
     }
 
@@ -399,5 +418,22 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         }
 
         return alphaAnimatorArrayList;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getColorTo() {
+        return activity.get().getResources().getColor(R.color.material_indigo400);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getColorFrom() {
+//        return activity.get().getResources().getColor(R.color.material_grey200);
+        return Color.parseColor("#00000000");
     }
 }

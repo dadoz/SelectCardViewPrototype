@@ -75,16 +75,13 @@ public class ContactListFragment extends Fragment
     }
 
     /**
-     *
+     * init actionbar
      */
     private void setActionbarTitle() {
-        try {
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setTitle(R.string.app_name);
-            ((AppCompatActivity) getActivity()).getSupportActionBar()
-                    .setDisplayHomeAsUpEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setTitle(R.string.app_name);
+            actionbar.setDisplayHomeAsUpEnabled(false);
         }
     }
 
