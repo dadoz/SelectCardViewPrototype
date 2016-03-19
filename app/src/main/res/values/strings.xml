@@ -6,6 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="contact_email">tunnus.android@gmail.com</string>
     <string name="author">Davide LM</string>
-    <string name="FLURRY_APIKEY">FB74GZXF6DH74M7CCZQX</string>
+    <string name="settings_label">Settings</string>
 
 </resources>

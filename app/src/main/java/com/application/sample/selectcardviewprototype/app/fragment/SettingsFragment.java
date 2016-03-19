@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -49,7 +50,7 @@ public class SettingsFragment extends Fragment
     private void onInitView() {
         Resources res = getActivity().getResources();
         setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(SETTINGS_ACTIONBAR_TITLE);
+        initActionbar();
         ArrayList<Setting> settingList = new ArrayList<Setting>();
         settingList.add(new Setting("Author", res.getString(R.string.author)));
         settingList.add(new Setting("Contacts", res.getString(R.string.contact_email)));
@@ -58,6 +59,16 @@ public class SettingsFragment extends Fragment
                 R.layout.setting_item, settingList));
     }
 
+    /**
+     *
+     */
+    public void initActionbar() {
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(SETTINGS_ACTIONBAR_TITLE);
+        }
+    }
     @Override
     public void onRestoreRecyclerView() {
     }

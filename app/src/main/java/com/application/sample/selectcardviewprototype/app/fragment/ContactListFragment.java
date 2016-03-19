@@ -1,8 +1,10 @@
 package com.application.sample.selectcardviewprototype.app.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.widget.FrameLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
+import com.application.sample.selectcardviewprototype.app.SettingsActivity;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
 import com.application.sample.selectcardviewprototype.app.singleton.RetrieveAssetsSingleton;
 import com.application.sample.selectcardviewprototype.app.cardviewAnimator.CardViewAnimator;
@@ -148,9 +151,7 @@ public class ContactListFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                ((AppCompatActivity) getActivity()).getSupportActionBar()
-                        .setDisplayHomeAsUpEnabled(true);
-                changeFragment(new SettingsFragment());
+                changeActivity(SettingsActivity.class);
                 return true;
             case android.R.id.home:
                 if (mStatus.isSelected()) {
@@ -163,15 +164,10 @@ public class ContactListFragment extends Fragment
 
     /**
      *
-     * @param frag
+     * @param activityClass
      */
-    private void changeFragment(Fragment frag) {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, frag)
-                .addToBackStack("Settings")
-                .commit();
+    private void changeActivity(Class activityClass) {
+        startActivity(new Intent(getActivity(), activityClass));
     }
 
 }
