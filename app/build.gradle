@@ -20,8 +20,8 @@ android {
         applicationId "com.application.sample.selectcardviewprototype.app"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.0.4"
     }
 
     compileOptions {
