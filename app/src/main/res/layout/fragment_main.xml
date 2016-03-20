@@ -5,14 +5,16 @@
                 android:background="@color/material_grey300"
                 tools:context=".MainActivity$PlaceholderFragment">
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewId"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+        android:id="@+id/recyclerViewId"
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
     <FrameLayout
         android:id="@+id/overlayViewId"
-        android:paddingLeft="@dimen/medium_padding"
-        android:paddingRight="@dimen/medium_padding"
-        android:paddingBottom="@dimen/medium_padding"
+        android:paddingLeft="@dimen/small_padding"
+        android:paddingRight="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"/>

@@ -6,7 +6,7 @@
     android:id="@+id/mainViewId"
     android:layout_width="match_parent"
     android:layout_height="@dimen/min_cardview_height"
-    android:layout_margin="@dimen/medium_padding"
+    android:layout_margin="@dimen/small_padding"
     card_view:cardBackgroundColor="@color/material_white"
     android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
@@ -22,16 +22,31 @@
             android:layout_width="@dimen/icon_medium_size"
             android:layout_height="@dimen/icon_medium_size"
             android:src="@drawable/ic_person_pin_circle_black_48dp"/>
-        <TextView
-            android:id="@+id/nameTextViewId"
+        <LinearLayout
+            android:id="@+id/nameLayoutId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/thumbnailImageViewId"
             android:layout_marginLeft="@dimen/medium_padding"
-            android:textSize="@dimen/abc_text_size_headline_material"
-            android:textColor="@color/material_indigo800"
-            android:text="sample"/>
+
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/nameTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:textColor="@color/material_indigo800"
+                android:text="sample"/>
+            <TextView
+                android:id="@+id/surnameTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/abc_text_size_menu_material"
+                android:textColor="@color/material_indigo400"
+                android:text="Surname"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/descriptionContentViewId"
@@ -40,7 +55,7 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/thumbnailImageViewId"
             android:layout_marginLeft="@dimen/medium_padding"
-            android:layout_below="@id/nameTextViewId"
+            android:layout_below="@id/nameLayoutId"
             android:layout_marginTop="30dp">
             <include layout="@layout/phone_layout"/>
             <include layout="@layout/email_layout"/>

@@ -12,21 +12,21 @@ public class ContactItem {
     private String id;
     private Bitmap thumbnail;
     private String name;
-    private String description;
+    private String surname;
 
     /**
      *
      * @param id
      * @param thumbnail
      * @param name
-     * @param description
+     * @param surname
      */
-    public ContactItem(String id, Bitmap thumbnail, String name, String description, String phone,
+    public ContactItem(String id, Bitmap thumbnail, String name, String surname, String phone,
                        String email, String position) {
         this.id = id;
         this.thumbnail = thumbnail;
         this.name = name;
-        this.description = description;
+        this.surname = surname;
         this.phone = phone;
         this.email = email;
         this.position = position;
@@ -68,8 +68,8 @@ public class ContactItem {
      *
      * @return
      */
-    public String getDescription() {
-        return description;
+    public String getSurname() {
+        return surname;
     }
 
     /**

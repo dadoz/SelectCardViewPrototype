@@ -3,7 +3,7 @@
     "id": 0,
     "thumbnail": null,
     "name": "Denise",
-    "description": "call info",
+    "surname": "Greedy",
     "phone": "333 - 809090",
     "email": "denise@fake-mail.com",
     "position": "Rue Charles de Gaule - Paris"
@@ -12,7 +12,7 @@
     "id": 1,
     "thumbnail": null,
     "name": "Oukka",
-    "description": "call info",
+    "surname": "Laikkanen",
     "phone": "222 - 809091",
     "email": "oukka@fake-mail.com",
     "position": "Filippenkatu - Finland"
@@ -21,7 +21,7 @@
     "id": 2,
     "thumbnail": null,
     "name": "Math",
-    "description": "call info",
+    "surname": "Groving",
     "phone": "111 - 809093",
     "email": null,
     "position": "Main Street - NY"
@@ -30,7 +30,7 @@
     "id": 3,
     "thumbnail": null,
     "name": "Viky",
-    "description": "call info",
+    "surname": "Crock",
     "phone": null,
     "email": "viky@fake-mail.com",
     "position": "Rue Calligan - Germanny"
@@ -39,7 +39,7 @@
     "id": 4,
     "thumbnail": null,
     "name": "Andrey",
-    "description": "call info",
+    "surname": "Milli",
     "phone": "444 - 809092",
     "email": "andrey@fake-mail.com",
     "position": null
@@ -48,7 +48,7 @@
     "id": 5,
     "thumbnail": null,
     "name": "Annette",
-    "description": "call info",
+    "surname": "Laurent",
     "phone": null,
     "email": "annette@fake-mail.com",
     "position": "Rue du Pain - Bruxelles"
@@ -57,7 +57,7 @@
     "id": 6,
     "thumbnail": null,
     "name": "Boris",
-    "description": "call info",
+    "surname": "Youriga",
     "phone": null,
     "email": "boris@fake-mail.com",
     "position": null

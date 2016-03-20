@@ -232,6 +232,8 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         view.setLayoutParams(lp);
         ((TextView) view.findViewById(R.id.nameTextViewId))
                 .setText(selectedItem.getName());
+        ((TextView) view.findViewById(R.id.surnameTextViewId))
+                .setText(selectedItem.getSurname());
         //update description view
         initDescriptionView(view, selectedItem);
     }
@@ -433,7 +435,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      * @return
      */
     public int getColorFrom() {
-//        return activity.get().getResources().getColor(R.color.material_grey200);
         return Color.parseColor("#00000000");
     }
 }
