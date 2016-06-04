@@ -1,6 +1,7 @@
 package com.application.sample.selectcardviewprototype.app.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +23,7 @@ import butterknife.ButterKnife;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.SettingsActivity;
 import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAdapter;
+import com.application.sample.selectcardviewprototype.app.singleton.PicassoSingleton;
 import com.application.sample.selectcardviewprototype.app.singleton.RetrieveAssetsSingleton;
 import com.application.sample.selectcardviewprototype.app.cardviewAnimator.CardViewAnimator;
 import com.application.sample.selectcardviewprototype.app.strategies.AppearOverAndExpandStrategy;
@@ -39,7 +42,7 @@ import java.util.ArrayList;
      * A placeholder fragment containing a simple view.
      */
 public class ContactListFragment extends Fragment
-        implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom {
+        implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom, PicassoSingleton.PicassoCallbacksInterface {
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
     @Bind(R.id.overlayViewId)
@@ -97,7 +100,9 @@ public class ContactListFragment extends Fragment
      */
     private void initRecyclerView(ArrayList<ContactItem> shoppingItems) {
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(shoppingItems,
-                new WeakReference<RecyclerviewAdapter.OnItemSelectedListenerCustom>(this));
+                new WeakReference<RecyclerviewAdapter.OnItemSelectedListenerCustom>(this),
+                new WeakReference<PicassoSingleton.PicassoCallbacksInterface>(this),
+                new WeakReference<Context>(getContext()));
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(lm);
         mRecyclerView.setAdapter(adapter);
@@ -109,7 +114,9 @@ public class ContactListFragment extends Fragment
     private void setCardViewAnimator() {
         cardBehavior = CardViewAnimator.getInstance();
         cardBehavior.setStrategy(new AppearOverAndExpandStrategy(mRecyclerView,
-                new WeakReference<Activity>(getActivity()), mOverlayView));
+                new WeakReference<Activity>(getActivity()),
+                new WeakReference<PicassoSingleton.PicassoCallbacksInterface>(this),
+                mOverlayView));
     }
 
     /**
@@ -167,4 +174,13 @@ public class ContactListFragment extends Fragment
         startActivity(new Intent(getActivity(), activityClass));
     }
 
+    @Override
+    public void onPicassoSuccessCallback() {
+        Log.e("TAG", "success");
+    }
+
+    @Override
+    public void onPicassoErrorCallback() {
+        Log.e("TAG", "error");
+    }
 }

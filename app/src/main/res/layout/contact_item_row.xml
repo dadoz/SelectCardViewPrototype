@@ -25,11 +25,10 @@
         <LinearLayout
             android:id="@+id/nameLayoutId"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/thumbnailImageViewId"
             android:layout_marginLeft="@dimen/medium_padding"
-
             android:orientation="vertical">
             <TextView
                 android:id="@+id/nameTextViewId"
@@ -45,7 +44,6 @@
                 android:textSize="@dimen/abc_text_size_menu_material"
                 android:textColor="@color/material_indigo400"
                 android:text="Surname"/>
-
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +54,7 @@
             android:layout_toRightOf="@id/thumbnailImageViewId"
             android:layout_marginLeft="@dimen/medium_padding"
             android:layout_below="@id/nameLayoutId"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="10dp">
             <include layout="@layout/phone_layout"/>
             <include layout="@layout/email_layout"/>
             <include layout="@layout/position_layout"/>

@@ -40,6 +40,14 @@ public class ContactItem {
      *
      * @return
      */
+    public String getThumbnail() {
+        return picture.getLarge();
+    }
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name.getFirst();
     }
@@ -146,6 +154,18 @@ public class ContactItem {
             this.large = large;
             this.medium = medium;
             this.thumbnail = thumbnail;
+        }
+
+        public String getThumbnail() {
+            return thumbnail;
+        }
+
+        public String getMedium() {
+            return medium;
+        }
+
+        public String getLarge() {
+            return large;
         }
     }
 }

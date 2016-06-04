@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,7 @@ import com.application.sample.selectcardviewprototype.app.adapter.RecyclerviewAd
 import com.application.sample.selectcardviewprototype.app.animator.AnimatorBuilder;
 import com.application.sample.selectcardviewprototype.app.cardviewAnimator.CardViewAnimatorStrategyInterface;
 import com.application.sample.selectcardviewprototype.app.model.ContactItem;
+import com.application.sample.selectcardviewprototype.app.singleton.PicassoSingleton;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 
 import java.lang.ref.WeakReference;
@@ -40,6 +42,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
     private final FrameLayout frameLayout;
+    private final WeakReference<PicassoSingleton.PicassoCallbacksInterface> picassoListener;
     private View selectedView;
     private AnimatorBuilder animatorBuilder;
     private boolean expanding = false;
@@ -55,6 +58,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
 
     public AppearOverAndExpandStrategy(RecyclerView recyclerView,
                                        WeakReference<Activity> activity,
+                                       WeakReference<PicassoSingleton.PicassoCallbacksInterface> listener,
                                        FrameLayout frameLayout) {
         this.activity = activity;
         this.recyclerView = recyclerView;
@@ -62,6 +66,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         this.status = StatusSingleton.getInstance();
         this.animatorBuilder = new AnimatorBuilder(new WeakReference<Context>(activity.get()
                 .getApplicationContext()));
+        this.picassoListener = listener;
     }
 
     @Override
@@ -234,8 +239,22 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
                 .setText(selectedItem.getName());
         ((TextView) view.findViewById(R.id.surnameTextViewId))
                 .setText(selectedItem.getSurname());
+
         //update description view
         initDescriptionView(view, selectedItem);
+    }
+
+    /**
+     *
+     * @param thumbnailImageView
+     * @param url
+     */
+    private void setProfilePic(ImageView thumbnailImageView, String url) {
+//        PicassoSingleton.getInstance(new WeakReference<Context>(activity.get()), picassoListener)
+//                .setProfilePictureAsync(thumbnailImageView, url,
+//                        ContextCompat.getDrawable(activity.get(), R.drawable.ic_person_pin_circle_black_48dp));
+
+
     }
 
     /**
