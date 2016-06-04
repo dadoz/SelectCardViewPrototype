@@ -25,6 +25,7 @@ public class AnimatorBuilder {
         return new AnimatorBuilder(context);
     }
 
+
     public AnimatorBuilder(WeakReference<Context> context) {
         this.duration = context.get().getResources().
                 getInteger(android.R.integer.config_mediumAnimTime);

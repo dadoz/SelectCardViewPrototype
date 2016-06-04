@@ -1,6 +1,7 @@
 package com.application.sample.selectcardviewprototype.app.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,13 @@ import java.util.List;
  */
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ShoppingItemViewHolder> {
-    private final List<ContactItem> shoppingItemList;
+    private final List<ContactItem> itemList;
     private final WeakReference<OnItemSelectedListenerCustom> listener;
 
 
     public RecyclerviewAdapter(ArrayList<ContactItem> list,
                                WeakReference<OnItemSelectedListenerCustom> listener) {
-
-        this.shoppingItemList = list;
+        this.itemList = list;
         this.listener = listener;
     }
 
@@ -38,16 +38,16 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
     @Override
     public void onBindViewHolder(ShoppingItemViewHolder vh, int position) {
-        vh.bindTo(shoppingItemList.get(position), position);
+        vh.bindTo(itemList.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return (null != shoppingItemList ? shoppingItemList.size() : 0);
+        return (null != itemList ? itemList.size() : 0);
     }
 
     public List<ContactItem> getAllItems() {
-        return shoppingItemList;
+        return itemList;
     }
 
     /**
