@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -13,6 +14,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,11 +41,11 @@ import static com.application.sample.selectcardviewprototype.app.singleton.Statu
 public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInterface {
     private static final long MIN_DELAY = 400;
     private static final int CUSTOM_MARGIN_BOTTOM = 600;
-    private final WeakReference<Activity> activity;
     private final RecyclerView recyclerView;
     private final StatusSingleton status;
     private final FrameLayout frameLayout;
     private final WeakReference<PicassoSingleton.PicassoCallbacksInterface> picassoListener;
+    private final WeakReference<Context> context;
     private View selectedView;
     private AnimatorBuilder animatorBuilder;
     private boolean expanding = false;
@@ -55,18 +58,22 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
     private Animator bottomAnimatorContent;
     private AnimatorSet animatorSet2;
     private ValueAnimator alphaFramelayoutAnimator;
+    private int purpleColor;
+    private int transparentColor;
 
-    public AppearOverAndExpandStrategy(RecyclerView recyclerView,
-                                       WeakReference<Activity> activity,
+    public AppearOverAndExpandStrategy(RecyclerView rv,
+                                       WeakReference<Context> ctx,
                                        WeakReference<PicassoSingleton.PicassoCallbacksInterface> listener,
-                                       FrameLayout frameLayout) {
-        this.activity = activity;
-        this.recyclerView = recyclerView;
-        this.frameLayout = frameLayout;
-        this.status = StatusSingleton.getInstance();
-        this.animatorBuilder = new AnimatorBuilder(new WeakReference<Context>(activity.get()
-                .getApplicationContext()));
-        this.picassoListener = listener;
+                                       FrameLayout fl) {
+        context = ctx;
+        recyclerView = rv;
+        frameLayout = fl;
+        status = StatusSingleton.getInstance();
+        animatorBuilder = new AnimatorBuilder(new WeakReference<>(context.get().getApplicationContext()));
+        picassoListener = listener;
+        purpleColor = ContextCompat.getColor(context.get(), R.color.deep_purple_600);
+        transparentColor = Color.TRANSPARENT;
+
     }
 
     @Override
@@ -106,8 +113,8 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
                 .getResizeBottomAnimator(view.findViewById(R.id.mainContentViewId), initialHeight,
                         getMarginTop(), recyclerView.getHeight(), expanding);
         alphaAnimator = animatorBuilder.getHideAnimator(recyclerView, expanding);
-        alphaFramelayoutAnimator = animatorBuilder.getColorTransitionAnimator(getColorFrom(),
-                getColorTo(), expanding);
+        alphaFramelayoutAnimator = animatorBuilder.getColorTransitionAnimator(transparentColor,
+                purpleColor, expanding);
 
         buildAnimatorSet(expanding);
         animatorSet1.start();
@@ -220,7 +227,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      * @return
      */
     private View inflateCardView() {
-        View view = activity.get().getLayoutInflater().inflate(R.layout.contact_item_row,
+        View view = ((Activity )context.get()).getLayoutInflater().inflate(R.layout.contact_item_row,
                 frameLayout);
         updateContentDescription(view);
         return view.findViewById(R.id.mainViewId);
@@ -242,19 +249,6 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
 
         //update description view
         initDescriptionView(view, selectedItem);
-    }
-
-    /**
-     *
-     * @param thumbnailImageView
-     * @param url
-     */
-    private void setProfilePic(ImageView thumbnailImageView, String url) {
-//        PicassoSingleton.getInstance(new WeakReference<Context>(activity.get()), picassoListener)
-//                .setProfilePictureAsync(thumbnailImageView, url,
-//                        ContextCompat.getDrawable(activity.get(), R.drawable.ic_person_pin_circle_black_48dp));
-
-
     }
 
     /**
@@ -318,11 +312,11 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      */
     private void updateContentDescription(final View view) {
         setColorFilterToDrawable(((ImageView) view.findViewById(R.id.phoneImageId)),
-                R.color.material_green400);
+                R.color.green_400);
         setColorFilterToDrawable(((ImageView) view.findViewById(R.id.emailImageId)),
-                R.color.material_pink400);
+                R.color.pink_400);
         setColorFilterToDrawable(((ImageView) view.findViewById(R.id.positionImageId)),
-                R.color.material_bluegrey600);
+                R.color.blue_grey_600);
     }
 
     /**
@@ -331,7 +325,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      * @param colorId
      */
     private void setColorFilterToDrawable(ImageView view, int colorId) {
-        int color = activity.get().getResources().getColor(colorId);
+        int color = ContextCompat.getColor(context.get(), colorId);
         view.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 
@@ -404,7 +398,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      * @param isExpanding
      */
     private void setActionBar(boolean isExpanding) {
-        ActionBar actionBar = ((AppCompatActivity) activity.get())
+        ActionBar actionBar = ((AppCompatActivity) context.get())
                 .getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(isExpanding);
@@ -431,29 +425,23 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
      */
     public ArrayList<Animator> getCardviewContentAnimatorArray() {
         View[] viewArray = getCardviewDescriptionViewArray();
-        ArrayList<Animator> alphaAnimatorArrayList = new ArrayList<Animator>();
-        for (int i = 0; i < viewArray.length; i++) {
-            if (viewArray[i].getVisibility() == View.VISIBLE) {
-                alphaAnimatorArrayList.add(animatorBuilder.getHideAnimator(viewArray[i], !expanding));
+        ArrayList<Animator> alphaAnimatorArrayList = new ArrayList<>();
+        for (View view: viewArray) {
+            if (view.getVisibility() == View.VISIBLE) {
+                alphaAnimatorArrayList.add(animatorBuilder.getHideAnimator(view, !expanding));
             }
         }
-
         return alphaAnimatorArrayList;
     }
 
     /**
-     *
+     * TODO crash down (resource not found)
      * @return
      */
-    public int getColorTo() {
-        return activity.get().getResources().getColor(R.color.material_indigo400);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getColorFrom() {
-        return Color.parseColor("#00000000");
+    public int getPrimaryColor() {
+        TypedArray typedArray = context.get().getTheme().obtainStyledAttributes(new int[] { R.attr.colorPrimary });
+        int color = typedArray.getColor(0, Color.BLACK);
+        typedArray.recycle();
+        return color;
     }
 }

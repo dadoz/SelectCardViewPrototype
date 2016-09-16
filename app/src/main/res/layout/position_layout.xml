@@ -27,13 +27,13 @@
             android:textSize="@dimen/abc_text_size_medium_material"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textColor="@color/material_bluegrey600"
+            android:textColor="@color/blue_grey_600"
             android:text="Boulevard route - 10"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/abc_text_size_small_material"
-            android:textColor="@color/material_bluegrey200"
+            android:textColor="@color/blue_grey_200"
 
             android:textStyle="italic"
             android:text="main address"/>

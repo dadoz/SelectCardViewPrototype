@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.google.android.gms.ads.AdView
-        android:background="@color/material_blue900"
+        android:background="@color/blue_grey_900"
         android:id="@+id/adViewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

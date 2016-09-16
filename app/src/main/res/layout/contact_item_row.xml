@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/min_cardview_height"
     android:layout_margin="@dimen/small_padding"
-    card_view:cardBackgroundColor="@color/material_white"
+    card_view:cardBackgroundColor="@color/white"
     android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
         android:id="@+id/mainContentViewId"
@@ -35,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/abc_text_size_large_material"
-                android:textColor="@color/material_indigo800"
+                android:textColor="@color/deep_purple_800"
                 android:text="sample"/>
             <TextView
                 android:id="@+id/surnameTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/abc_text_size_menu_material"
-                android:textColor="@color/material_indigo400"
+                android:textColor="@color/deep_purple_400"
                 android:text="Surname"/>
         </LinearLayout>
 

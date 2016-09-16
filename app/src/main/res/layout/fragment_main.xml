@@ -2,8 +2,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/material_grey300"
-                tools:context=".MainActivity$PlaceholderFragment">
+                android:background="@color/grey_200"
+                tools:context=".MainActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewId"
         android:paddingTop="@dimen/small_padding"

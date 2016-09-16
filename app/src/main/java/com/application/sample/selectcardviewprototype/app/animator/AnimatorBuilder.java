@@ -21,6 +21,11 @@ public class AnimatorBuilder {
     private String ALPHA = "alpha";
     private String BOTTOM = "bottom";
 
+    /**
+     * TODO follow up builder design pattern
+     * @param context
+     * @return
+     */
     public static AnimatorBuilder getInstance(WeakReference<Context> context) {
         return new AnimatorBuilder(context);
     }

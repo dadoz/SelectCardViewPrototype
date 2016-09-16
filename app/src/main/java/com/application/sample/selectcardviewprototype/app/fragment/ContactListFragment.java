@@ -1,11 +1,13 @@
 package com.application.sample.selectcardviewprototype.app.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.application.sample.selectcardviewprototype.app.strategies.AppearOverA
 import com.application.sample.selectcardviewprototype.app.model.ContactItem;
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -102,7 +105,7 @@ public class ContactListFragment extends Fragment
         RecyclerviewAdapter adapter = new RecyclerviewAdapter(shoppingItems,
                 new WeakReference<RecyclerviewAdapter.OnItemSelectedListenerCustom>(this),
                 new WeakReference<PicassoSingleton.PicassoCallbacksInterface>(this),
-                new WeakReference<Context>(getContext()));
+                new WeakReference<>(getContext()));
         RecyclerView.LayoutManager lm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(lm);
         mRecyclerView.setAdapter(adapter);
@@ -114,7 +117,7 @@ public class ContactListFragment extends Fragment
     private void setCardViewAnimator() {
         cardBehavior = CardViewAnimator.getInstance();
         cardBehavior.setStrategy(new AppearOverAndExpandStrategy(mRecyclerView,
-                new WeakReference<Activity>(getActivity()),
+                new WeakReference<>(getContext()),
                 new WeakReference<PicassoSingleton.PicassoCallbacksInterface>(this),
                 mOverlayView));
     }
@@ -176,7 +179,6 @@ public class ContactListFragment extends Fragment
 
     @Override
     public void onPicassoSuccessCallback() {
-        Log.e("TAG", "success");
     }
 
     @Override

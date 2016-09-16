@@ -22,13 +22,13 @@
             android:id="@+id/settingLabelTextId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/material_indigo400"
+            android:textColor="@color/deep_purple_400"
             android:textSize="@dimen/abc_text_size_medium_material"/>
         <TextView
             android:id="@+id/settingDescriptionTextId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/material_bluegrey400"
+            android:textColor="@color/blue_grey_400"
             android:textSize="@dimen/abc_text_size_small_material"/>
     </LinearLayout>
 </RelativeLayout>
