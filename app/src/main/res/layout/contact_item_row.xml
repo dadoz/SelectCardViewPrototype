@@ -6,7 +6,9 @@
     android:id="@+id/mainViewId"
     android:layout_width="match_parent"
     android:layout_height="@dimen/min_cardview_height"
-    android:layout_margin="@dimen/small_padding"
+    android:layout_marginLeft="@dimen/medium_padding"
+    android:layout_marginRight="@dimen/medium_padding"
+    android:layout_marginBottom="@dimen/medium_padding"
     card_view:cardBackgroundColor="@color/white"
     android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
@@ -14,7 +16,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/medium_padding">
-
         <ImageView
             android:id="@+id/thumbnailImageViewId"
             android:layout_alignParentLeft="true"

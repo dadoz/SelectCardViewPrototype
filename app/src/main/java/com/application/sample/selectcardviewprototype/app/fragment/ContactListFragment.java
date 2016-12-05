@@ -40,12 +40,9 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-
-/**
-     * A placeholder fragment containing a simple view.
-     */
 public class ContactListFragment extends Fragment
-        implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom, PicassoSingleton.PicassoCallbacksInterface {
+        implements OnRestoreRecyclerViewInterface, RecyclerviewAdapter.OnItemSelectedListenerCustom,
+        PicassoSingleton.PicassoCallbacksInterface {
     @Bind(R.id.recyclerViewId)
     RecyclerView mRecyclerView;
     @Bind(R.id.overlayViewId)

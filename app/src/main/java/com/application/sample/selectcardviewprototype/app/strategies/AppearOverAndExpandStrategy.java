@@ -16,6 +16,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -85,6 +86,8 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         ContactItem selectedItem = getSelectedItem(position);
         View cardView = initOverLayout(selectedItem);
         initAnimator(cardView, expanding);
+        recyclerView.setOnTouchListener(scrollListenerRecyclerView);
+
     }
 
     @Override
@@ -93,6 +96,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         status.setStatus(NOT_SET);
         View cardView = getInflatedCardView();
         initAnimator(cardView, expanding);
+        recyclerView.setOnTouchListener(null);
     }
 
     /**
@@ -444,4 +448,14 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         typedArray.recycle();
         return color;
     }
+
+    /**
+     *
+     */
+    View.OnTouchListener scrollListenerRecyclerView = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return true;
+        }
+    };
 }

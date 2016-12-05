@@ -1,8 +1,5 @@
 package com.application.sample.selectcardviewprototype.app.cardviewAnimator;
 
-/**
- * Created by davide on 10/09/15.
- */
 public class CardViewAnimator {
     public static CardViewAnimator cardViewStrategyRef;
     private CardViewAnimatorStrategyInterface strategyRef;

@@ -10,9 +10,6 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
-/**
- * Created by davide on 15/10/15.
- */
 public class AnimatorBuilder {
 
     private static final String TOP = "top";

@@ -1,20 +1,20 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/grey_200"
-                tools:context=".MainActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_200"
+    tools:context=".MainActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewId"
-        android:paddingTop="@dimen/small_padding"
-        android:paddingBottom="@dimen/small_padding"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:paddingTop="@dimen/medium_padding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <FrameLayout
         android:id="@+id/overlayViewId"
-        android:paddingLeft="@dimen/small_padding"
-        android:paddingRight="@dimen/small_padding"
-        android:paddingBottom="@dimen/small_padding"
+        android:paddingLeft="@dimen/medium_padding"
+        android:paddingRight="@dimen/medium_padding"
+        android:paddingBottom="@dimen/medium_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"/>

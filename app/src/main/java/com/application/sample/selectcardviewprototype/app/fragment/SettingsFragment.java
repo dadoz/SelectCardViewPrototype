@@ -21,10 +21,7 @@ import android.widget.TextView;
 import com.application.sample.selectcardviewprototype.app.BuildConfig;
 import com.application.sample.selectcardviewprototype.app.R;
 import com.application.sample.selectcardviewprototype.app.model.Setting;
-import com.application.sample.selectcardviewprototype.app.utils.ConnectivityUtils;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -32,14 +29,10 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by davide on 24/01/16.
- */
 public class SettingsFragment extends Fragment
         implements OnRestoreRecyclerViewInterface {
     @Bind(R.id.settingsListViewId) ListView settingsListView;
-    @Bind(R.id.adViewId) AdView adView;
-    private String SETTINGS_ACTIONBAR_TITLE = "Settings";
+    private static final String SETTINGS_ACTIONBAR_TITLE = "Settings";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,20 +56,8 @@ public class SettingsFragment extends Fragment
         settingList.add(new Setting("Build version", BuildConfig.VERSION_NAME));
         settingsListView.setAdapter(new SettingsAdapter(getActivity().getApplicationContext(),
                 R.layout.setting_item, settingList));
-        showAds();
     }
 
-    /**
-     * show ads
-     */
-    private void showAds() {
-       if (ConnectivityUtils.isConnected(new WeakReference<Context>(getActivity().getApplicationContext()))) {
-            MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.banner_ad_unit_id));
-            AdRequest adRequest = new AdRequest.Builder()
-                    .build();
-            adView.loadAd(adRequest);
-        }
-    }
 
     /**
      *
@@ -111,6 +92,7 @@ public class SettingsFragment extends Fragment
         }
         return true;
     }
+
     /**
      * array adapter
      */
@@ -153,6 +135,4 @@ public class SettingsFragment extends Fragment
             return convertView;
         }
     }
-
-
 }
