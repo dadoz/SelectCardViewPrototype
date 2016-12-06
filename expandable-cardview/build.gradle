@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 25
@@ -17,6 +18,32 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "source"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.dlamanna.expandable-cardview'
+            artifactId 'expandable-cardview'
+            version '0.1'
+            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/expandable-cardview-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username '$mavenUser'
+                password '$mavenPassword'
+            }
+            url "https://github.com/dadoz/SelectCardViewPrototype"
         }
     }
 }
