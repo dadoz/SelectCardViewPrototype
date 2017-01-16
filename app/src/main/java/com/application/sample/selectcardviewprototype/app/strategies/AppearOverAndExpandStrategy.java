@@ -36,9 +36,7 @@ import java.util.ArrayList;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.NOT_SET;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.SELECTED;
 
-/**
- * Created by davide on 14/09/15.
- */
+
 public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInterface {
     private static final long MIN_DELAY = 400;
     private static final int CUSTOM_MARGIN_BOTTOM = 600;

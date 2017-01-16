@@ -1,10 +1,6 @@
 package com.application.sample.selectcardviewprototype.app.model;
 
-import android.graphics.Bitmap;
 
-/**
- * Created by davide on 04/09/15.
- */
 public class ContactItem {
 //    private String name;
 //    private String surname;

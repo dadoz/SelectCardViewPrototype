@@ -17,10 +17,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by davide on 04/09/15.
- */
-
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ShoppingItemViewHolder> {
     private final List<ContactItem> itemList;
     private final WeakReference<OnItemSelectedListenerCustom> listener;

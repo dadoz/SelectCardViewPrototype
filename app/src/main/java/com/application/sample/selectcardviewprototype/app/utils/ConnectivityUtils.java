@@ -6,9 +6,7 @@ import android.net.NetworkInfo;
 
 import java.lang.ref.WeakReference;
 
-/**
- * Created by davide on 01/05/16.
- */
+
 public class ConnectivityUtils {
     /**
      *

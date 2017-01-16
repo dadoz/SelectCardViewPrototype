@@ -1,8 +1,5 @@
 package com.application.sample.selectcardviewprototype.app.model;
 
-/**
- * Created by davide on 24/01/16.
- */
 public class Setting {
     private String label;
     private String description;
