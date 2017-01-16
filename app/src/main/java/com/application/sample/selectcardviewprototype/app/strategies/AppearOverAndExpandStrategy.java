@@ -70,7 +70,7 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
         status = StatusSingleton.getInstance();
         animatorBuilder = new AnimatorBuilder(new WeakReference<>(context.get().getApplicationContext()));
         picassoListener = listener;
-        purpleColor = ContextCompat.getColor(context.get(), R.color.deep_purple_600);
+        purpleColor = ContextCompat.getColor(context.get(), R.color.orange_600);
         transparentColor = Color.TRANSPARENT;
 
     }
