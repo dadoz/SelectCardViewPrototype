@@ -21,8 +21,8 @@ android {
         applicationId "com.application.sample.selectcardviewprototype.app"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 9
-        versionName "1.0.9"
+        versionCode 10
+        versionName "1.0.10"
     }
 
     signingConfigs {
