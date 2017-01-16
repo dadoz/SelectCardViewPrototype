@@ -120,10 +120,8 @@ public class SettingsFragment extends Fragment
         public View getView(final int position, View convertView, ViewGroup parent) {
             Setting settingObj = settingList.get(position);
 
-            LayoutInflater inflater = (LayoutInflater) getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.setting_item, parent, false);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.setting_item, parent, false);
             }
             TextView label = (TextView) convertView.findViewById(R.id.settingLabelTextId);
             TextView description = ((TextView) convertView.findViewById(R.id.settingDescriptionTextId));

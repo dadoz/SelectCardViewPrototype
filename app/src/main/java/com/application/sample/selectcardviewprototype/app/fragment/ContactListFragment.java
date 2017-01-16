@@ -53,9 +53,6 @@ public class ContactListFragment extends Fragment
     private RetrieveAssetsSingleton assetsSingleton;
 
 
-    public ContactListFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +63,7 @@ public class ContactListFragment extends Fragment
         onInitView();
         return view;
     }
+
 
     /**
      * init cardview
@@ -80,11 +78,12 @@ public class ContactListFragment extends Fragment
     /**
      * init actionbar
      */
-    private void setActionbarTitle() {
+    public void setActionbarTitle() {
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
             actionbar.setTitle(R.string.app_name);
             actionbar.setDisplayHomeAsUpEnabled(false);
+            actionbar.setDisplayShowHomeEnabled(false);
         }
     }
 

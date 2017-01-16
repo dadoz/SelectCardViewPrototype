@@ -7,14 +7,14 @@
     tools:context=".MainActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewId"
-        android:paddingTop="@dimen/medium_padding"
+        android:paddingTop="@dimen/padding_16"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <FrameLayout
         android:id="@+id/overlayViewId"
-        android:paddingLeft="@dimen/medium_padding"
-        android:paddingRight="@dimen/medium_padding"
-        android:paddingBottom="@dimen/medium_padding"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:paddingBottom="@dimen/padding_16"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"/>

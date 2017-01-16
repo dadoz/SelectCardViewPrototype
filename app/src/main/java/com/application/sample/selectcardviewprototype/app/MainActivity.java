@@ -1,6 +1,8 @@
 package com.application.sample.selectcardviewprototype.app;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,19 +11,24 @@ import com.application.sample.selectcardviewprototype.app.fragment.ContactListFr
 import com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton;
 import com.flurry.android.FlurryAgent;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.*;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.*;
 import static com.application.sample.selectcardviewprototype.app.singleton.StatusSingleton.StatusEnum.NOT_SET;
 
 
 public class MainActivity extends AppCompatActivity {
-    private StatusSingleton status;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        status = getInstance();
         FlurryAgent.onStartSession(this);
 
         if (savedInstanceState == null) {
@@ -44,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (status.getStatus() == SELECTED) {
+        if (StatusSingleton.getInstance().getStatus() == SELECTED) {
             getFragment().onRestoreRecyclerView();
-            status.setStatus(NOT_SET);
+            StatusSingleton.getInstance().setStatus(NOT_SET);
             return;
         }
 

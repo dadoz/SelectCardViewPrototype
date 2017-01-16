@@ -404,8 +404,9 @@ public class AppearOverAndExpandStrategy implements CardViewAnimatorStrategyInte
                 .getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(isExpanding);
+            actionBar.setDisplayShowHomeEnabled(isExpanding);
             actionBar.setElevation(isExpanding ? 0 : 20);
-            actionBar.setDisplayShowTitleEnabled(!isExpanding);
+            actionBar.setTitle(isExpanding ? R.string.account_details : R.string.app_name);
         }
     }
 

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:id="@+id/mainViewId"
     android:layout_width="match_parent"
     android:layout_height="@dimen/min_cardview_height"
-    android:layout_marginLeft="@dimen/medium_padding"
-    android:layout_marginRight="@dimen/medium_padding"
-    android:layout_marginBottom="@dimen/medium_padding"
-    card_view:cardBackgroundColor="@color/white"
+    android:layout_marginLeft="@dimen/padding_16"
+    android:layout_marginRight="@dimen/padding_16"
+    android:layout_marginBottom="@dimen/padding_8"
     android:foreground="?android:attr/selectableItemBackground">
     <RelativeLayout
         android:id="@+id/mainContentViewId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/medium_padding">
+        android:padding="@dimen/padding_16">
         <ImageView
             android:id="@+id/thumbnailImageViewId"
             android:layout_alignParentLeft="true"
@@ -29,21 +27,21 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/thumbnailImageViewId"
-            android:layout_marginLeft="@dimen/medium_padding"
+            android:layout_marginLeft="@dimen/padding_16"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/nameTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/abc_text_size_large_material"
-                android:textColor="@color/deep_purple_800"
+                android:textColor="@color/grey_900"
                 android:text="sample"/>
             <TextView
                 android:id="@+id/surnameTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/abc_text_size_menu_material"
-                android:textColor="@color/deep_purple_400"
+                android:textColor="@color/grey_700"
                 android:text="Surname"/>
         </LinearLayout>
 
@@ -52,10 +50,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_toRightOf="@id/thumbnailImageViewId"
-            android:layout_marginLeft="@dimen/medium_padding"
-            android:layout_below="@id/nameLayoutId"
-            android:layout_marginTop="10dp">
+            android:layout_marginLeft="@dimen/padding_16"
+            android:layout_marginRight="@dimen/padding_16"
+            android:layout_marginTop="@dimen/padding_16"
+            android:layout_below="@id/nameLayoutId">
             <include layout="@layout/phone_layout"/>
             <include layout="@layout/email_layout"/>
             <include layout="@layout/position_layout"/>
